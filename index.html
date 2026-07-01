@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carvimax — Encuentra tu vehículo ideal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="carvimax_hero.webp" media="(min-width:861px)">
+<style>
+  :root{
+    --brand:        oklch(0.55 0.22 293);
+    --brand-strong: oklch(0.49 0.22 293);
+    --brand-tint:   oklch(0.96 0.03 293);
+    --navy:         oklch(0.24 0.07 286);
+    --navy-2:       oklch(0.17 0.055 286);
+    --surface:      oklch(0.99 0.004 293);
+    --white:        oklch(0.995 0.0015 293);
+    --card:         oklch(0.972 0.008 293);
+    --card-hover:   oklch(0.955 0.012 293);
+    --ink:          oklch(0.27 0.03 293);
+    --ink-2:        oklch(0.52 0.02 293);
+    --ink-3:        oklch(0.56 0.02 293);
+    --line:         oklch(0.92 0.01 293);
+    --line-2:       oklch(0.955 0.008 293);
+    --on-dark:      oklch(0.98 0.01 293);
+    --on-dark-2:    oklch(0.85 0.045 293);
+    --on-brand-ic:  oklch(0.86 0.09 293);
+    --on-brand-2:   oklch(0.96 0.015 293);
+    --focus:        oklch(0.55 0.22 293);
+    --lav:          oklch(0.966 0.014 293);
+    --lav-bd:       oklch(0.9 0.028 293);
+    --ease:         cubic-bezier(0.16, 1, 0.3, 1);
+    --maxw:1120px;
+  }
+  *{box-sizing:border-box}
+  html,body{overflow-x:hidden}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--surface);color:var(--ink);
+    font-family:'Source Sans 3',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .lex{font-family:'Lexend',sans-serif}
+  svg{display:block}
+  .container{max-width:var(--maxw);margin:0 auto;padding:0 24px;width:100%}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+  :where(a,button,input,select):focus-visible{outline:2px solid var(--focus);outline-offset:3px;border-radius:8px}
+  .ic{stroke:currentColor;stroke-width:1.6;fill:none;stroke-linecap:round;stroke-linejoin:round}
+
+  /* ===== Header ===== */
+  .site-header{position:sticky;top:0;z-index:50;background:color-mix(in oklch, var(--surface) 88%, transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;gap:12px;height:68px}
+  .brand{display:flex;align-items:center;margin-right:8px}
+  .brand img{height:44px;width:auto;display:block}
+  .nav__links{display:flex;align-items:center;gap:4px;margin-left:6px}
+  .nav__links a{font-size:14px;color:var(--ink-2);padding:9px 13px;border-radius:9px;transition:color .25s var(--ease),background .25s var(--ease)}
+  .nav__actions{display:flex;align-items:center;gap:9px;margin-left:auto}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:'Lexend',sans-serif;font-weight:600;font-size:14px;
+    border-radius:12px;padding:10px 18px;cursor:pointer;border:1px solid transparent;white-space:nowrap;
+    transition:transform .25s var(--ease),background .25s var(--ease),border-color .25s var(--ease)}
+  .btn:active{transform:scale(.98)}
+  .btn--ghost{background:transparent;border-color:var(--line);color:var(--ink)}
+  .btn--primary{background:var(--brand);color:var(--on-dark)}
+  .hamburger{display:none;background:transparent;border:1px solid var(--line);border-radius:12px;width:44px;height:44px;align-items:center;justify-content:center;color:var(--ink);cursor:pointer;transition:transform .2s var(--ease)}
+  .hamburger:active{transform:scale(.95)}
+  @media (hover:hover) and (pointer:fine){
+    .nav__links a:hover{color:var(--ink);background:var(--line-2)}
+    .btn--ghost:hover{background:var(--line-2)}
+    .btn--primary:hover{background:var(--brand-strong)}
+  }
+  .mobile-menu{display:none;border-top:1px solid var(--line);background:var(--white)}
+  .mobile-menu.open{display:block}
+  .mobile-menu a{display:block;padding:14px 24px;font-family:'Lexend',sans-serif;font-size:15px;font-weight:500;color:var(--ink);border-bottom:1px solid var(--line-2);transition:background .2s var(--ease)}
+  .mobile-menu a:last-child{border-bottom:none}
+  @media (hover:hover) and (pointer:fine){.mobile-menu a:hover{background:var(--line-2)}}
+
+  /* ===== Hero ===== */
+  .hero{position:relative;background:var(--navy)}
+  @media (min-width:861px){
+    .hero{background:
+      linear-gradient(90deg, var(--navy) 0%, oklch(0.24 0.07 286 / 0.86) 26%, oklch(0.24 0.07 286 / 0.18) 48%, oklch(0.24 0.07 286 / 0) 66%),
+      url("carvimax_hero.webp") right center / cover no-repeat, var(--navy);}
+  }
+  .hero__in{min-height:412px;display:flex;align-items:center;padding-block:48px 96px}
+  .hero__col{max-width:468px;width:100%}
+  .hero h1{font-family:'Lexend',sans-serif;font-weight:600;font-size:clamp(31px,3.6vw,44px);line-height:1.05;letter-spacing:-0.02em;color:var(--on-dark);margin:0 0 12px}
+  .hero h1 .hnw{white-space:nowrap}
+  .hero__sub{font-size:clamp(15px,1.7vw,17px);color:var(--on-dark-2);margin:0 0 24px;max-width:40ch}
+
+  .search{background:var(--white);border-radius:20px;box-shadow:0 34px 70px -34px oklch(0.2 0.08 286 / 0.7);padding:16px}
+  .tabs{display:flex;gap:24px;border-bottom:1px solid var(--line);margin-bottom:14px}
+  .tab{font-family:'Lexend',sans-serif;font-weight:600;font-size:14px;padding:9px 2px;color:var(--ink-3);background:none;border:none;cursor:pointer;position:relative;transition:color .25s var(--ease)}
+  .tab.on{color:var(--ink)}
+  .tab.on::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2.5px;background:var(--brand);border-radius:2px}
+  .pills{display:flex;gap:8px;margin-bottom:12px}
+  .pill{font-family:'Source Sans 3',sans-serif;font-size:13.5px;font-weight:600;border:1px solid var(--line);border-radius:999px;padding:8px 17px;color:var(--ink-2);background:none;cursor:pointer;transition:background .25s var(--ease),color .25s var(--ease),border-color .25s var(--ease),transform .15s var(--ease)}
+  .pill:active{transform:scale(.97)}
+  .pill.on{background:var(--navy);color:var(--on-dark);border-color:var(--navy)}
+  #searchCount{display:inline-block;transition:opacity .13s var(--ease),filter .13s var(--ease)}
+  .cta.swapping #searchCount{opacity:.3;filter:blur(2px)}
+  .field{position:relative;display:flex;align-items:center;gap:9px;border:1px solid var(--line);border-radius:12px;padding:0 13px;height:52px;background:var(--white);transition:border-color .25s var(--ease),box-shadow .25s var(--ease)}
+  .field:focus-within{border-color:var(--brand);box-shadow:0 0 0 4px oklch(0.55 0.22 293 / 0.14)}
+  .field>.ic{width:19px;height:19px;color:var(--ink-3)}
+  .field input{border:none;outline:none;background:none;font-family:inherit;font-size:15px;color:var(--ink);width:100%;height:100%}
+  .field input::placeholder{color:var(--ink-3)}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:9px}
+  .selwrap{position:relative}
+  .selwrap select{appearance:none;-webkit-appearance:none;width:100%;height:52px;border:1px solid var(--line);border-radius:12px;background:var(--white);
+    font-family:inherit;font-size:15px;color:var(--ink);padding:0 38px 0 13px;cursor:pointer;transition:border-color .25s var(--ease),box-shadow .25s var(--ease)}
+  .selwrap select:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 4px oklch(0.55 0.22 293 / 0.14)}
+  .selwrap select:has(option[value=""]:checked){color:var(--ink-3)}
+  .selwrap select:disabled{opacity:.5;cursor:not-allowed}
+  .panel[hidden]{display:none}
+  .panels{display:flow-root;transition:height .38s var(--ease)}
+  .panels.animating{overflow:hidden}
+  @keyframes panelIn{from{opacity:0}to{opacity:1}}
+  .panel.entering{animation:panelIn .3s var(--ease) both}
+  .selwrap .chev{width:16px;height:16px;position:absolute;right:13px;top:50%;transform:translateY(-50%);color:var(--ink-3);pointer-events:none}
+  .cta{font-family:'Lexend',sans-serif;font-weight:600;font-size:15px;width:100%;margin-top:11px;background:var(--brand);color:var(--on-dark);border:none;border-radius:12px;padding:15px;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;transition:transform .2s var(--ease),background .25s var(--ease)}
+  .cta:active{transform:scale(.98)}
+  .cta:hover{background:var(--brand-strong)}
+  .cta .ic{width:16px;height:16px}
+
+  .typeahead-pop{position:absolute;top:calc(100% + 8px);left:0;width:100%;background:var(--white);border:1px solid var(--line);border-radius:12px;padding:6px;
+    box-shadow:0 24px 48px -22px oklch(0.2 0.08 286 / 0.5);z-index:20;transform-origin:top;transform:scale(.98);opacity:0;pointer-events:none;transition:transform .2s var(--ease),opacity .2s var(--ease)}
+  .field.open .typeahead-pop{transform:scale(1);opacity:1;pointer-events:auto}
+  .ta-head{font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3);padding:7px 10px 5px}
+  .ta-item{display:flex;align-items:center;justify-content:space-between;padding:9px 10px;border-radius:8px;font-size:14px;color:var(--ink);cursor:pointer;transition:background .18s var(--ease)}
+  .ta-item .c{font-size:12.5px;color:var(--ink-3)}
+  @media (hover:hover) and (pointer:fine){.ta-item:hover{background:var(--line-2)}}
+
+  /* ===== Banner financiamiento (Davivienda) ===== */
+  .finbanner-wrap{max-width:var(--maxw);margin:0 auto;padding:24px 24px 0}
+  .finbanner{display:flex;align-items:center;gap:18px;background:linear-gradient(180deg, oklch(0.968 0.015 293), oklch(0.955 0.022 293));border:1px solid var(--lav-bd);border-radius:18px;padding:16px 20px;
+    box-shadow:0 22px 48px -28px oklch(0.2 0.08 286 / 0.42);
+    opacity:0;transform:translateY(10px);transition:opacity .5s var(--ease),transform .3s var(--ease),box-shadow .24s var(--ease)}
+  .finbanner.is-visible{opacity:1;transform:none}
+  @media (hover:hover) and (pointer:fine){ .finbanner.is-visible:hover{transform:translateY(-2px);box-shadow:0 26px 56px -26px oklch(0.2 0.08 286 / 0.5)} }
+  .finbanner__text{flex:1;min-width:0}
+  .finbanner__eyebrow{font-family:'Lexend',sans-serif;font-weight:600;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:6px}
+  .finbanner__h{font-family:'Lexend',sans-serif;font-weight:600;font-size:17px;line-height:1.3;color:var(--ink);margin:0;display:flex;align-items:center;flex-wrap:wrap;gap:7px}
+  .finbanner__h b{color:var(--brand);font-weight:700}
+  .finbanner__pct{display:inline-flex;align-items:center;justify-content:center;min-width:62px;height:30px;padding:0 12px;border-radius:9px;
+    background:var(--brand);color:var(--on-dark);font-family:'Lexend',sans-serif;font-weight:800;font-size:17px;
+    box-shadow:0 6px 16px -8px oklch(0.55 0.22 293 / 0.7);transform:scale(.9);opacity:0;transition:transform .5s var(--ease),opacity .4s var(--ease)}
+  .finbanner.is-visible .finbanner__pct{transform:scale(1);opacity:1;transition-delay:.12s}
+  .finbanner__s{font-size:12.5px;color:var(--ink-2);margin:5px 0 0}
+  .finbanner__right{display:flex;align-items:center;gap:14px}
+  .finbanner__con{font-size:12.5px;color:var(--ink-3)}
+  .finbanner__logo{height:24px;width:auto;display:block}
+  .finbanner__div{width:1px;height:30px;background:var(--line);flex:none}
+  .finbanner__cta{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;font-size:13.5px}
+  .finbanner__cta svg{width:15px;height:15px;transition:transform .25s var(--ease)}
+  @media (hover:hover) and (pointer:fine){ .finbanner__cta:hover svg{transform:translateX(4px)} }
+
+  /* ===== Pilares (editorial 2 columnas) ===== */
+  .section{max-width:var(--maxw);margin:0 auto;padding:44px 24px 80px}
+  .conf__head{margin-bottom:22px}
+  .conf__title{font-family:'Lexend',sans-serif;font-weight:600;font-size:clamp(26px,3vw,34px);line-height:1.1;letter-spacing:-0.02em;margin:0 0 8px;max-width:24ch}
+  .conf__sub{color:var(--ink-2);font-size:clamp(15px,1.6vw,17px);margin:0;max-width:58ch}
+  .conf__grid{display:grid;grid-template-columns:1.5fr 1fr;gap:14px;align-items:stretch}
+
+  .ccard{border-radius:18px;padding:22px;display:flex;flex-direction:column;transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
+  .cc-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex:none}
+  .cc-icon .ic{width:22px;height:22px}
+  .cc-title{font-family:'Lexend',sans-serif;font-weight:600;font-size:17px;line-height:1.2;letter-spacing:-0.01em;margin:0}
+  .cc-btn{display:inline-flex;align-items:center;gap:8px;font-family:'Lexend',sans-serif;font-weight:600;font-size:13.5px;border-radius:11px;padding:12px 18px;border:1px solid transparent;cursor:pointer;margin-top:auto;align-self:flex-start;transition:transform .16s var(--ease),background .2s var(--ease),border-color .2s var(--ease)}
+  .cc-btn:active{transform:scale(.97)}
+  .cc-btn .ic{width:15px;height:15px;transition:transform .25s var(--ease)}
+
+  .ccard--verified{background:var(--brand);color:var(--on-dark);position:relative;overflow:hidden;box-shadow:0 22px 48px -26px oklch(0.45 0.2 293 / 0.5)}
+  .ccard--verified .cc-head{display:flex;align-items:center;gap:13px;margin-bottom:14px}
+  .ccard--verified .cc-icon{background:oklch(1 0 0 / 0.16);color:var(--on-dark)}
+  .ccard--verified .cc-title{color:var(--on-dark)}
+  .ccard--verified .cc-sub{font-size:13.5px;color:var(--on-brand-2);margin:2px 0 0}
+  .cc-checks{list-style:none;margin:0 0 18px;padding:14px 0 0;border-top:1px solid oklch(1 0 0 / 0.18);display:grid;grid-template-columns:1fr 1fr;gap:10px 18px}
+  .cc-checks li{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--on-dark)}
+  .cc-checks .ic{width:16px;height:16px;stroke:oklch(0.88 0.07 293);stroke-width:1.9;flex:none}
+  .cc-btn--onbrand{background:var(--white);color:var(--brand-strong)}
+  .ccard--verified::after{content:"";position:absolute;right:-60px;top:-60px;width:180px;height:180px;border-radius:50%;background:oklch(1 0 0 / 0.06);pointer-events:none}
+
+  .ccard--seguros{background:var(--white);border:1px solid var(--line);justify-content:space-between;box-shadow:0 22px 48px -28px oklch(0.2 0.08 286 / 0.42)}
+  .ccard--seguros .cc-icon{background:var(--brand-tint);color:var(--brand);margin-bottom:14px}
+  .ccard--seguros .cc-title{color:var(--ink)}
+  .ccard--seguros .cc-sub{font-size:13.5px;color:var(--ink-2);margin:4px 0 0}
+  .cc-partner{display:flex;align-items:center;gap:9px;margin-bottom:14px}
+  .cc-con{font-size:12.5px;color:var(--ink-3)}
+  .cc-acsa{height:20px;width:auto;display:block}
+  .cc-btn--ghost{background:transparent;border-color:oklch(0.86 0.06 293);color:var(--brand)}
+
+  @media (hover:hover) and (pointer:fine){
+    .ccard--seguros:hover{transform:translateY(-2px);box-shadow:0 26px 56px -26px oklch(0.2 0.08 286 / 0.5)}
+    .ccard--verified:hover{transform:translateY(-2px);box-shadow:0 28px 58px -24px oklch(0.45 0.2 293 / 0.58)}
+    .cc-btn:hover .ic{transform:translateX(4px)}
+    .cc-btn--onbrand:hover{background:oklch(0.95 0.02 293)}
+    .cc-btn--ghost:hover{background:var(--brand-tint)}
+  }
+  .conf__grid .ccard:nth-child(2){transition-delay:90ms}
+
+  /* ===== Explorar por categorías (acoplada al hero) ===== */
+  .cats-wrap{max-width:var(--maxw);margin:-56px auto 0;padding:0 24px;position:relative;z-index:5}
+  .cats-strip{background:var(--white);border:1px solid var(--line);border-radius:18px;padding:16px 20px;box-shadow:0 26px 54px -28px oklch(0.2 0.08 286 / 0.5)}
+  .cats__head{margin-bottom:14px}
+  .cats__title{font-family:'Lexend',sans-serif;font-weight:600;font-size:18px;line-height:1.2;letter-spacing:-0.01em;margin:0;color:var(--ink)}
+  .cats__grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+  .cat{background:var(--card);border-radius:12px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--ink);
+    transition:transform .28s var(--ease),box-shadow .28s var(--ease),background .2s var(--ease)}
+  .cat span{font-family:'Lexend',sans-serif;font-weight:600;font-size:13.5px}
+  .cat img{width:118px;max-width:100%;height:auto;display:block;margin:2px auto 0;transition:transform .3s var(--ease)}
+  @media (hover:hover) and (pointer:fine){
+    .cat:hover{transform:translateY(-3px);background:var(--card-hover);box-shadow:0 14px 28px -18px oklch(0.45 0.16 293 / 0.32)}
+    .cat:hover img{transform:scale(1.05)}
+  }
+
+  /* ===== Destacados ===== */
+  .dest-wrap{max-width:var(--maxw);margin:0 auto;padding:64px 24px 0}
+  .dest__head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:20px}
+  .dest__title{font-family:'Lexend',sans-serif;font-weight:600;font-size:clamp(24px,3vw,32px);line-height:1.1;letter-spacing:-0.02em;margin:0;color:var(--ink)}
+  .dest__nav{display:flex;align-items:center;gap:16px;flex:none}
+  .dest__all{display:inline-flex;align-items:center;gap:7px;font-family:'Lexend',sans-serif;font-weight:600;font-size:14px;color:var(--brand);white-space:nowrap;transition:color .2s var(--ease)}
+  .dest__all svg{width:16px;height:16px;transition:transform .3s var(--ease)}
+  .dest__arrows{display:flex;gap:8px}
+  .dest__arrow{width:40px;height:40px;border-radius:11px;border:1px solid var(--line);background:var(--white);color:var(--ink-2);display:flex;align-items:center;justify-content:center;cursor:pointer;
+    transition:transform .16s var(--ease),background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease),opacity .2s var(--ease)}
+  .dest__arrow svg{width:20px;height:20px}
+  .dest__arrow:active{transform:scale(.92)}
+  .dest__arrow:disabled{opacity:.38;cursor:default}
+  @media (hover:hover) and (pointer:fine){
+    .dest__all:hover{color:var(--brand-strong)} .dest__all:hover svg{transform:translateX(3px)}
+    .dest__arrow:not(:disabled):hover{background:var(--line-2);color:var(--ink)}
+  }
+  .dest__track{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;padding:12px 6px 38px;margin:0 -6px;scrollbar-width:none}
+  .dest__track::-webkit-scrollbar{display:none}
+  .vcard{flex:0 0 300px;scroll-snap-align:start;position:relative;background:var(--white);border:1px solid var(--line);border-radius:18px;overflow:hidden;
+    box-shadow:0 18px 40px -26px oklch(0.2 0.08 286 / 0.42);opacity:0;
+    transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
+  @keyframes vcardIn{from{opacity:0;translate:0 16px}to{opacity:1;translate:0 0}}
+  .dest__track.is-in .vcard{animation:vcardIn .55s var(--ease) both}
+  .dest__track.is-in .vcard:nth-child(2){animation-delay:70ms}
+  .dest__track.is-in .vcard:nth-child(3){animation-delay:140ms}
+  .dest__track.is-in .vcard:nth-child(4){animation-delay:210ms}
+  .dest__track.is-in .vcard:nth-child(5){animation-delay:280ms}
+  .vcard__img{position:relative;aspect-ratio:16/10;overflow:hidden;background:var(--card)}
+  .vcard__img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s var(--ease)}
+  .vbadge{position:absolute;top:10px;left:10px;display:inline-flex;align-items:center;gap:5px;font-family:'Lexend',sans-serif;font-weight:600;font-size:11px;padding:4px 9px;border-radius:999px;
+    background:oklch(0.53 0.14 150);color:oklch(0.99 0.02 150);box-shadow:0 4px 12px -6px oklch(0.5 0.14 150 / 0.7)}
+  .vbadge .ic{width:12px;height:12px;stroke-width:2.4;stroke:currentColor;fill:none}
+  .vheart{position:absolute;top:9px;right:9px;z-index:2;width:32px;height:32px;border-radius:50%;border:none;cursor:pointer;
+    background:color-mix(in oklch, var(--white) 86%, transparent);backdrop-filter:blur(4px);color:var(--brand);display:flex;align-items:center;justify-content:center;
+    transition:transform .16s var(--ease),background .2s var(--ease)}
+  .vheart .ic{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;transition:fill .2s var(--ease)}
+  .vheart.on .ic{fill:var(--brand)}
+  .vcard__body{padding:13px 15px 15px}
+  .vcard__link::after{content:"";position:absolute;inset:0;z-index:1}
+  .vcard__title{font-family:'Lexend',sans-serif;font-weight:600;font-size:15px;letter-spacing:-0.01em;color:var(--ink);margin:0}
+  .vcard__price{font-family:'Lexend',sans-serif;font-weight:700;font-size:17px;color:var(--brand);margin-top:2px}
+  .vcard__meta{font-size:12.5px;color:var(--ink-3);margin-top:4px}
+  @media (hover:hover) and (pointer:fine){
+    .vcard:hover{transform:translateY(-4px);box-shadow:0 28px 52px -26px oklch(0.2 0.08 286 / 0.5)}
+    .vcard:hover .vcard__img img{transform:scale(1.06)}
+    .vheart:hover{background:var(--white)}
+  }
+
+  /* ===== Vende tu carro ===== */
+  .sell-wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px 84px}
+  .sell{position:relative;overflow:hidden;border-radius:22px;color:var(--on-dark);padding:48px 44px;min-height:300px;display:flex;align-items:center;
+    background:
+      linear-gradient(90deg, var(--navy-2) 0%, oklch(0.17 0.055 286 / 0.92) 30%, oklch(0.17 0.055 286 / 0.35) 52%, oklch(0.17 0.055 286 / 0) 70%),
+      url("carvimax_sell.webp") center right / cover no-repeat, var(--navy-2);
+    box-shadow:0 26px 54px -30px oklch(0.2 0.08 286 / 0.6)}
+  .sell__text{max-width:430px;position:relative;z-index:1;opacity:0;translate:0 12px;transition:opacity .6s var(--ease),translate .6s var(--ease)}
+  .sell.is-in .sell__text{opacity:1;translate:0 0}
+  .sell__eyebrow{font-family:'Lexend',sans-serif;font-weight:600;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--on-brand-ic);margin-bottom:10px}
+  .sell h2{font-family:'Lexend',sans-serif;font-weight:600;font-size:clamp(23px,2.9vw,31px);line-height:1.1;letter-spacing:-0.02em;margin:0 0 9px;color:var(--on-dark)}
+  .sell p{color:var(--on-dark-2);font-size:15px;line-height:1.5;margin:0 0 22px;max-width:38ch}
+  .sell__cta{display:inline-flex;align-items:center;gap:9px;font-family:'Lexend',sans-serif;font-weight:600;font-size:15px;background:var(--brand);color:var(--on-dark);
+    border:none;border-radius:13px;padding:14px 24px;cursor:pointer;transition:transform .16s var(--ease),background .25s var(--ease)}
+  .sell__cta:active{transform:scale(.97)}
+  .sell__cta svg{width:16px;height:16px;transition:transform .25s var(--ease)}
+  @media (hover:hover) and (pointer:fine){
+    .sell__cta:hover{background:var(--brand-strong)} .sell__cta:hover svg{transform:translateX(4px)}
+  }
+
+  /* ===== Footer ===== */
+  .site-footer{background:var(--navy-2);color:var(--on-dark)}
+  .footer__in{max-width:var(--maxw);margin:0 auto;padding:52px 24px 26px}
+  .footer__grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1.2fr;gap:32px}
+  .footer__logo{display:inline-flex;background:var(--white);border-radius:10px;padding:8px 12px;margin-bottom:14px}
+  .footer__logo img{height:26px;width:auto;display:block}
+  .footer__tag{color:var(--on-dark-2);font-size:13.5px;line-height:1.55;margin:0 0 16px;max-width:30ch}
+  .footer__social{display:flex;gap:10px}
+  .footer__social a{width:36px;height:36px;border-radius:10px;border:1px solid oklch(1 0 0 / 0.14);display:flex;align-items:center;justify-content:center;color:var(--on-dark-2);transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}
+  .footer__social svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+  .footer__col h3{font-family:'Lexend',sans-serif;font-weight:600;font-size:14px;color:var(--on-dark);margin:0 0 14px;letter-spacing:.01em}
+  .footer__col a{display:block;color:var(--on-dark-2);font-size:13.5px;margin-bottom:10px;transition:color .2s var(--ease)}
+  .footer__bottom{border-top:1px solid oklch(1 0 0 / 0.12);margin-top:36px;padding-top:20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .footer__bottom span,.footer__bottom a{color:var(--on-dark-2);font-size:12.5px}
+  @media (hover:hover) and (pointer:fine){
+    .footer__col a:hover{color:var(--on-dark)}
+    .footer__social a:hover{background:oklch(1 0 0 / 0.1);color:var(--on-dark);border-color:oklch(1 0 0 / 0.22)}
+    .footer__bottom a:hover{color:var(--on-dark)}
+  }
+
+  /* ===== Reveal ===== */
+  .reveal{opacity:0;transform:translateY(16px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+  .reveal.is-visible{opacity:1;transform:none}
+  .d1{transition-delay:70ms}.d2{transition-delay:150ms}
+
+  /* ===== Responsive ===== */
+  @media (max-width:860px){
+    .nav__links{display:none}
+    .hamburger{display:inline-flex}
+    .nav{gap:8px}
+    .brand img{height:38px}
+    .nav__actions{gap:7px}
+    .nav__actions .btn{padding:9px 14px}
+    .hero{background:linear-gradient(160deg, var(--navy) 0%, var(--navy-2) 100%)}
+    .hero__in{min-height:0;padding-block:32px 72px}
+    .hero__col{max-width:none}
+    .hero__sub{max-width:none}
+    .cats-wrap{margin-top:-44px;padding:0 20px}
+    .section{padding:40px 24px 56px}
+    .conf__grid{grid-template-columns:1fr;gap:11px}
+    .conf__title{max-width:none}
+    .conf__sub{max-width:none}
+    .cc-checks{grid-template-columns:1fr}
+    .cc-btn{width:100%;justify-content:center;align-self:stretch}
+    .cats__grid{display:flex;overflow-x:auto;gap:10px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:8px}
+    .cat{min-width:128px;flex:0 0 auto;scroll-snap-align:start}
+    .sell{align-items:flex-end;min-height:360px;padding:28px 26px;
+      background:
+        linear-gradient(180deg, oklch(0.17 0.055 286 / 0.32) 0%, oklch(0.17 0.055 286 / 0.55) 42%, oklch(0.17 0.055 286 / 0.88) 78%, var(--navy-2) 100%),
+        url("carvimax_sell.webp") center top / cover no-repeat, var(--navy-2)}
+    .sell__text{max-width:none}
+    .sell p{max-width:none}
+    .footer__grid{grid-template-columns:1fr 1fr;gap:28px}
+    .footer__brand{grid-column:1 / -1}
+    .footer__tag{max-width:38ch}
+  }
+  @media (max-width:430px){
+    .two{grid-template-columns:1fr}
+    .nav__actions .btn{padding:9px 12px;font-size:13.5px}
+    .container{padding:0 16px}
+    .cats-wrap{padding:0 16px}
+    .section{padding:36px 16px 48px}
+    .ccard{padding:16px}
+    .sell-wrap{padding:0 16px 60px}
+    .sell{padding:26px 20px}
+    .footer__in{padding:44px 16px 24px}
+    .footer__bottom{flex-direction:column;align-items:flex-start;gap:8px}
+  }
+  @media (max-width:600px){
+    .finbanner{flex-direction:column;align-items:stretch;gap:12px;padding:14px 16px}
+    .finbanner__div{display:none}
+    .finbanner__logo{height:20px}
+    .finbanner__cta{margin-left:auto}
+    .finbanner-wrap{padding:20px 16px 0}
+    .dest-wrap{padding:52px 16px 0}
+    .dest__arrows{display:none}
+    .vcard{flex-basis:80vw;max-width:300px}
+  }
+  .ta-item.active{background:var(--line-2)}
+  @media (prefers-reduced-motion:reduce){
+    *{transition-duration:.001ms !important}
+    .reveal{opacity:1;transform:none}
+    .vcard{opacity:1 !important}
+    .dest__track .vcard{animation:none !important}
+    .panel.entering{animation:none !important}
+    .sell__text{opacity:1 !important;translate:none}
+  }
+</style>
+<noscript><style>
+  .reveal,.finbanner,.sell__text{opacity:1 !important;transform:none !important;translate:0 !important}
+  .vcard{opacity:1 !important}
+  .finbanner .finbanner__pct{opacity:1 !important;transform:none !important}
+</style></noscript>
+</head>
+<body>
+
+  <!-- ===================== HEADER ===================== -->
+  <header class="site-header">
+    <div class="container nav">
+      <a href="#" class="brand" aria-label="Carvimax, ir al inicio">
+        <img src="CarvimaxLogo.avif" alt="Carvimax">
+      </a>
+      <nav class="nav__links" aria-label="Principal">
+        <a href="https://www.carvimax.com/comprar">Comprar</a>
+        <a href="#">Financiamiento</a>
+        <a href="#">Seguros</a>
+        <a href="#">Sobre nosotros</a>
+      </nav>
+      <div class="nav__actions">
+        <a href="#" class="btn btn--ghost">Acceder</a>
+        <a href="https://www.carvimax.com/sell" class="btn btn--primary">Vender</a>
+        <button class="hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileMenu">
+          <svg class="ic" viewBox="0 0 24 24" width="22" height="22"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="https://www.carvimax.com/comprar">Comprar</a>
+      <a href="#">Financiamiento</a>
+      <a href="#">Seguros</a>
+      <a href="#">Sobre nosotros</a>
+    </div>
+  </header>
+
+  <main>
+  <!-- ===================== HERO ===================== -->
+  <section class="hero" aria-label="Buscador de vehículos">
+    <div class="container hero__in">
+      <div class="hero__col">
+        <h1 class="reveal is-visible">Encuentra tu <span class="hnw">vehículo ideal</span></h1>
+        <p class="hero__sub reveal d1">La forma más transparente, rápida y confiable de comprar o vender vehículos.</p>
+
+        <form class="search reveal d2" role="search" id="searchForm">
+          <div class="tabs" role="tablist" aria-label="Tipo de vehículo">
+            <button type="button" class="tab on" role="tab" id="tab-usado" aria-controls="panel-usado" aria-selected="true" data-tab="usado">Usado</button>
+            <button type="button" class="tab" role="tab" id="tab-nuevo" aria-controls="panel-nuevo" aria-selected="false" tabindex="-1" data-tab="nuevo">Nuevo</button>
+          </div>
+
+          <div class="panels" id="panelsBox">
+          <!-- Panel: Usado -->
+          <div class="panel" role="tabpanel" id="panel-usado" aria-labelledby="tab-usado" data-panel="usado">
+            <div class="pills" role="group" aria-label="Origen del vehículo">
+              <button type="button" class="pill" data-count="98" data-origen="importado">Importado</button>
+              <button type="button" class="pill" data-count="38" data-origen="agencia">De agencia</button>
+            </div>
+
+            <div class="field" id="typeahead">
+              <svg class="ic" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+              <label class="sr-only" for="q">Busca por marca o modelo</label>
+              <input id="q" type="text" autocomplete="off" placeholder="Busca por marca o modelo" role="combobox" aria-expanded="false" aria-controls="taPop" aria-autocomplete="list">
+              <div class="typeahead-pop" id="taPop" role="listbox" aria-label="Marcas con inventario"></div>
+            </div>
+
+            <div class="two">
+              <div class="selwrap">
+                <label class="sr-only" for="precio">Precio</label>
+                <select id="precio">
+                  <option value="" selected disabled>Precio</option>
+                  <option value="0-5000">Menos de $5,000</option>
+                  <option value="5000-10000">$5,000 a $10,000</option>
+                  <option value="10000-20000">$10,000 a $20,000</option>
+                  <option value="20000-30000">$20,000 a $30,000</option>
+                  <option value="30000-">Más de $30,000</option>
+                </select>
+                <svg class="ic chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+              </div>
+              <div class="selwrap">
+                <label class="sr-only" for="depto">Departamento</label>
+                <select id="depto">
+                  <option value="" selected disabled>Departamento</option>
+                  <option>San Salvador</option>
+                  <option>La Libertad</option>
+                  <option>Santa Ana</option>
+                  <option>San Miguel</option>
+                  <option>Sonsonate</option>
+                  <option>La Paz</option>
+                  <option>Usulután</option>
+                  <option>Ahuachapán</option>
+                  <option>San Vicente</option>
+                  <option>Cuscatlán</option>
+                  <option>La Unión</option>
+                  <option>Chalatenango</option>
+                  <option>Morazán</option>
+                  <option>Cabañas</option>
+                </select>
+                <svg class="ic chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Panel: Nuevo -->
+          <div class="panel" role="tabpanel" id="panel-nuevo" aria-labelledby="tab-nuevo" data-panel="nuevo" hidden>
+            <div class="two">
+              <div class="selwrap">
+                <label class="sr-only" for="marca">Marca</label>
+                <select id="marca">
+                  <option value="" selected disabled>Marca</option>
+                  <option>Toyota</option>
+                  <option>Nissan</option>
+                  <option>Hyundai</option>
+                  <option>Kia</option>
+                  <option>Chevrolet</option>
+                  <option>Mitsubishi</option>
+                  <option>Honda</option>
+                  <option>Suzuki</option>
+                </select>
+                <svg class="ic chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+              </div>
+              <div class="selwrap">
+                <label class="sr-only" for="modelo">Modelo</label>
+                <select id="modelo" disabled>
+                  <option value="" selected disabled>Modelo</option>
+                </select>
+                <svg class="ic chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+              </div>
+            </div>
+          </div>
+          </div>
+
+          <button type="submit" class="cta" id="searchCta">
+            <svg class="ic" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+            Ver <span id="searchCount">136</span> vehículos
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CATEGORÍAS (acoplada al hero) ===================== -->
+  <div class="cats-wrap reveal">
+    <div class="cats-strip">
+      <div class="cats__head">
+        <h2 class="cats__title" id="cats-title">Explora por categorías</h2>
+      </div>
+      <div class="cats__grid">
+      <a class="cat" href="https://www.carvimax.com/comprar?tipo=suv" aria-label="Explorar SUV">
+        <img src="cat_suv.webp" alt="" width="472" height="232" loading="lazy">
+        <span>SUV</span>
+      </a>
+      <a class="cat" href="https://www.carvimax.com/comprar?tipo=pickup" aria-label="Explorar Pickup">
+        <img src="cat_pickup.webp" alt="" width="472" height="232" loading="lazy">
+        <span>Pickup</span>
+      </a>
+      <a class="cat" href="https://www.carvimax.com/comprar?tipo=sedan" aria-label="Explorar Sedán">
+        <img src="cat_sedan.webp" alt="" width="472" height="232" loading="lazy">
+        <span>Sedán</span>
+      </a>
+      <a class="cat" href="https://www.carvimax.com/comprar?tipo=hatchback" aria-label="Explorar Hatchback">
+        <img src="cat_hatchback.webp" alt="" width="472" height="232" loading="lazy">
+        <span>Hatchback</span>
+      </a>
+      <a class="cat" href="https://www.carvimax.com/comprar?tipo=coupe" aria-label="Explorar Coupé">
+        <img src="cat_coupe.webp" alt="" width="472" height="232" loading="lazy">
+        <span>Coupé</span>
+      </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== BANNER FINANCIAMIENTO ===================== -->
+  <div class="finbanner-wrap">
+    <div class="finbanner" id="finBanner" role="region" aria-label="Financiamiento con Davivienda">
+      <div class="finbanner__text">
+        <div class="finbanner__eyebrow">Financiamiento</div>
+        <p class="finbanner__h">Financia el <span class="finbanner__pct" id="finPct">100%</span> de tu vehículo, desde <b>$3,000</b></p>
+        <p class="finbanner__s">Sin prima, ni prenda.</p>
+      </div>
+      <div class="finbanner__right">
+        <span class="finbanner__con">con</span>
+        <img class="finbanner__logo" src="Davivienda-Logo-trim.png" alt="Davivienda">
+        <span class="finbanner__div" aria-hidden="true"></span>
+        <a href="#" class="btn btn--primary finbanner__cta">Precalificarme
+          <svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== DESTACADOS ===================== -->
+  <section class="dest-wrap" aria-labelledby="dest-title">
+    <div class="dest__head">
+      <h2 class="dest__title" id="dest-title">Destacados</h2>
+      <div class="dest__nav">
+        <a class="dest__all" href="https://www.carvimax.com/comprar">Ver todos
+          <svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <div class="dest__arrows">
+          <button type="button" class="dest__arrow" data-dir="-1" aria-label="Vehículos anteriores"><svg class="ic" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
+          <button type="button" class="dest__arrow" data-dir="1" aria-label="Vehículos siguientes"><svg class="ic" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="dest__track" id="destTrack">
+      <article class="vcard">
+        <div class="vcard__img">
+          <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=800&q=70" alt="Toyota RAV4 XLE" loading="lazy">
+          <span class="vbadge" title="Identidad del vendedor, documentos e historial verificados por Carvimax"><svg class="ic" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Verificado</span>
+          <button type="button" class="vheart" aria-label="Guardar vehículo" aria-pressed="false"><svg class="ic" viewBox="0 0 24 24"><path d="M12 21C5 14 3 11 3 7.5A4.5 4.5 0 0 1 12 6a4.5 4.5 0 0 1 9 1.5C21 11 19 14 12 21z"/></svg></button>
+        </div>
+        <div class="vcard__body">
+          <a class="vcard__link" href="https://www.carvimax.com/vehicle/1"><h3 class="vcard__title">Toyota RAV4 XLE</h3></a>
+          <div class="vcard__price">$24,900</div>
+          <div class="vcard__meta">2022 · 38,000 km · San Salvador</div>
+        </div>
+      </article>
+
+      <article class="vcard">
+        <div class="vcard__img">
+          <img src="https://images.unsplash.com/photo-1551830820-330a71b99659?auto=format&fit=crop&w=800&q=70" alt="Ford Ranger XL" loading="lazy">
+          <span class="vbadge" title="Identidad del vendedor, documentos e historial verificados por Carvimax"><svg class="ic" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Verificado</span>
+          <button type="button" class="vheart" aria-label="Guardar vehículo" aria-pressed="false"><svg class="ic" viewBox="0 0 24 24"><path d="M12 21C5 14 3 11 3 7.5A4.5 4.5 0 0 1 12 6a4.5 4.5 0 0 1 9 1.5C21 11 19 14 12 21z"/></svg></button>
+        </div>
+        <div class="vcard__body">
+          <a class="vcard__link" href="https://www.carvimax.com/vehicle/2"><h3 class="vcard__title">Ford Ranger XL</h3></a>
+          <div class="vcard__price">$18,500</div>
+          <div class="vcard__meta">2019 · 54,000 km · La Libertad</div>
+        </div>
+      </article>
+
+      <article class="vcard">
+        <div class="vcard__img">
+          <img src="https://images.unsplash.com/photo-1615063029891-497bebd4f03c?auto=format&fit=crop&w=800&q=70" alt="Kia Rio LX" loading="lazy">
+          <span class="vbadge" title="Identidad del vendedor, documentos e historial verificados por Carvimax"><svg class="ic" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Verificado</span>
+          <button type="button" class="vheart" aria-label="Guardar vehículo" aria-pressed="false"><svg class="ic" viewBox="0 0 24 24"><path d="M12 21C5 14 3 11 3 7.5A4.5 4.5 0 0 1 12 6a4.5 4.5 0 0 1 9 1.5C21 11 19 14 12 21z"/></svg></button>
+        </div>
+        <div class="vcard__body">
+          <a class="vcard__link" href="https://www.carvimax.com/vehicle/3"><h3 class="vcard__title">Kia Rio LX</h3></a>
+          <div class="vcard__price">$9,700</div>
+          <div class="vcard__meta">2022 · 74,000 km · Santa Ana</div>
+        </div>
+      </article>
+
+      <article class="vcard">
+        <div class="vcard__img">
+          <img src="https://images.unsplash.com/photo-1688893287874-ac7fbd686c24?auto=format&fit=crop&w=800&q=70" alt="Hyundai Tucson" loading="lazy">
+          <span class="vbadge" title="Identidad del vendedor, documentos e historial verificados por Carvimax"><svg class="ic" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Verificado</span>
+          <button type="button" class="vheart" aria-label="Guardar vehículo" aria-pressed="false"><svg class="ic" viewBox="0 0 24 24"><path d="M12 21C5 14 3 11 3 7.5A4.5 4.5 0 0 1 12 6a4.5 4.5 0 0 1 9 1.5C21 11 19 14 12 21z"/></svg></button>
+        </div>
+        <div class="vcard__body">
+          <a class="vcard__link" href="https://www.carvimax.com/vehicle/4"><h3 class="vcard__title">Hyundai Tucson</h3></a>
+          <div class="vcard__price">$16,200</div>
+          <div class="vcard__meta">2021 · 60,000 km · San Miguel</div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== CONFIANZA ===================== -->
+  <section class="section" aria-labelledby="conf-title">
+    <div class="conf__head reveal">
+      <h2 class="conf__title" id="conf-title">Comprar y vender, sin sorpresas</h2>
+      <p class="conf__sub">Reducimos el riesgo y la informalidad de comprar autos usados en El Salvador. Todo lo que hace segura tu operación, en un solo lugar.</p>
+    </div>
+
+    <div class="conf__grid">
+      <!-- Verificados -->
+      <article class="ccard ccard--verified reveal">
+        <div class="cc-head">
+          <span class="cc-icon" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9.3 12l1.9 1.9L15 10"/></svg></span>
+          <div>
+            <h3 class="cc-title">Vehículos y vendedores verificados</h3>
+            <p class="cc-sub">Sabes con quién y con qué tratas.</p>
+          </div>
+        </div>
+        <ul class="cc-checks">
+          <li><svg class="ic" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Identidad del vendedor</li>
+          <li><svg class="ic" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Documentos y placa al día</li>
+          <li><svg class="ic" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Historial del vehículo</li>
+          <li><svg class="ic" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Traspaso legal con notario</li>
+        </ul>
+        <a href="https://www.carvimax.com/comprar" class="cc-btn cc-btn--onbrand">
+          Explorar vehículos
+          <svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </article>
+
+      <!-- Seguros -->
+      <article class="ccard ccard--seguros reveal">
+        <span class="cc-icon" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24"><path d="M12 3c5 0 9 3.2 9 7H3c0-3.8 4-7 9-7z"/><path d="M12 10v8a2.2 2.2 0 0 1-4.2 0"/></svg></span>
+        <div>
+          <h3 class="cc-title">Seguros</h3>
+          <p class="cc-sub">Cotiza y contrata la póliza de tu vehículo aquí mismo, sin vueltas.</p>
+        </div>
+        <div>
+          <div class="cc-partner">
+            <span class="cc-con">con</span>
+            <img class="cc-acsa" src="logo-acsa-seguros.avif" alt="ACSA">
+          </div>
+          <a href="https://www.carvimax.com/portal/seguros" class="cc-btn cc-btn--ghost">
+            Cotizar seguro
+            <svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== VENDE TU CARRO ===================== -->
+  <section class="sell-wrap" aria-labelledby="sell-title">
+    <div class="sell" id="sellBand">
+      <div class="sell__text">
+        <div class="sell__eyebrow">Para vendedores</div>
+        <h2 id="sell-title">¿Quieres vender tu carro?</h2>
+        <p>Publica gratis y llega a miles de compradores verificados. Te acompañamos hasta el traspaso legal con notario.</p>
+        <a href="https://www.carvimax.com/sell" class="sell__cta">Vender mi vehículo
+          <svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="site-footer">
+    <div class="footer__in">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <span class="footer__logo"><img src="CarvimaxLogo.avif" alt="Carvimax"></span>
+          <p class="footer__tag">El referente de El Salvador, donde cada vendedor es verificado y cada traspaso, transparente.</p>
+          <div class="footer__social">
+            <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M15 8h-2a2 2 0 0 0-2 2v12"/><path d="M8 13h6"/></svg></a>
+            <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor"/></svg></a>
+            <a href="#" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M4 20l1.4-4A8 8 0 1 1 9 19.5z"/><path d="M9 10c0 3 2 5 5 5"/></svg></a>
+          </div>
+        </div>
+        <div class="footer__col">
+          <h3>Servicios</h3>
+          <a href="https://www.carvimax.com/comprar">Comprar vehículos</a>
+          <a href="https://www.carvimax.com/sell">Vender vehículos</a>
+          <a href="#">Financiamiento</a>
+          <a href="https://www.carvimax.com/portal/seguros">Seguros</a>
+        </div>
+        <div class="footer__col">
+          <h3>Soporte</h3>
+          <a href="#">Términos y Condiciones</a>
+          <a href="#">Política de Privacidad</a>
+          <a href="#">Preguntas frecuentes</a>
+        </div>
+        <div class="footer__col">
+          <h3>Contacto</h3>
+          <a href="#">San Salvador, El Salvador</a>
+          <a href="tel:+50322289999">2228-9999</a>
+          <a href="mailto:info@carvimax.com">info@carvimax.com</a>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>© 2026 Carvimax. Todos los derechos reservados.</span>
+        <span><a href="#">Aviso legal</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  (function(){
+    var ham=document.getElementById('hamburger'), menu=document.getElementById('mobileMenu');
+    ham.addEventListener('click',function(){ var o=menu.classList.toggle('open'); ham.setAttribute('aria-expanded',o?'true':'false'); });
+
+    /* Buscador: tabs Usado/Nuevo + refinamientos */
+    var searchCta=document.getElementById('searchCta'), searchCount=document.getElementById('searchCount');
+    var COUNTS={usado:136, nuevo:8}, curTab='usado';
+    function swapCount(n){
+      if(!searchCount||!searchCta) return;
+      searchCta.classList.add('swapping');
+      setTimeout(function(){ searchCount.textContent=n; searchCta.classList.remove('swapping'); }, 130);
+    }
+    var tabEls=Array.prototype.slice.call(document.querySelectorAll('.tab[data-tab]'));
+    tabEls.forEach(function(t){
+      t.addEventListener('click',function(){
+        if(t.classList.contains('on')) return;
+        tabEls.forEach(function(x){ x.classList.remove('on'); x.setAttribute('aria-selected','false'); x.setAttribute('tabindex','-1'); });
+        t.classList.add('on'); t.setAttribute('aria-selected','true'); t.removeAttribute('tabindex');
+        curTab=t.getAttribute('data-tab');
+        var box=document.getElementById('panelsBox');
+        var from=box.offsetHeight;
+        document.querySelectorAll('.panel[data-panel]').forEach(function(p){ p.hidden = p.getAttribute('data-panel')!==curTab; });
+        if(!reduceM&&box){
+          var showing=box.querySelector('.panel:not([hidden])');
+          box.classList.add('animating');
+          box.style.height='auto';
+          var to=box.offsetHeight;
+          box.style.height=from+'px';
+          showing.classList.remove('entering'); void showing.offsetWidth; showing.classList.add('entering');
+          requestAnimationFrame(function(){ requestAnimationFrame(function(){ box.style.height=to+'px'; }); });
+        }
+        if(curTab!=='usado'){ document.querySelectorAll('[data-panel="usado"] .pill').forEach(function(x){ x.classList.remove('on'); }); }
+        swapCount(COUNTS[curTab]);
+      });
+    });
+    var panelsBox=document.getElementById('panelsBox');
+    if(panelsBox){
+      panelsBox.addEventListener('transitionend',function(e){
+        if(e.target===panelsBox&&e.propertyName==='height'){ panelsBox.style.height=''; panelsBox.classList.remove('animating'); }
+      });
+    }
+    document.querySelector('.tabs').addEventListener('keydown',function(e){
+      if(e.key!=='ArrowLeft'&&e.key!=='ArrowRight') return;
+      var i=tabEls.indexOf(document.activeElement); if(i<0) return;
+      e.preventDefault();
+      var n=(i+(e.key==='ArrowRight'?1:-1)+tabEls.length)%tabEls.length;
+      tabEls[n].click(); tabEls[n].focus();
+    });
+    document.querySelectorAll('[data-panel="usado"] .pill').forEach(function(p){
+      p.addEventListener('click',function(){
+        var wasOn=p.classList.contains('on');
+        document.querySelectorAll('[data-panel="usado"] .pill').forEach(function(x){ x.classList.remove('on'); });
+        if(wasOn){ swapCount(COUNTS.usado); }
+        else { p.classList.add('on'); swapCount(p.getAttribute('data-count')); }
+      });
+    });
+    /* Marca → Modelo dinámico (nuevos) */
+    var MODELOS={
+      'Toyota':['Corolla','Yaris','RAV4','Hilux','Prado','Rush'],
+      'Nissan':['Sentra','Versa','Kicks','Frontier','X-Trail'],
+      'Hyundai':['Accent','Elantra','Tucson','Santa Fe','Creta'],
+      'Kia':['Rio','Picanto','Sportage','Sorento','Seltos'],
+      'Chevrolet':['Onix','Aveo','Tracker','Groove','Sail'],
+      'Mitsubishi':['Mirage','Lancer','Outlander','L200','Xpander'],
+      'Honda':['Civic','City','CR-V','HR-V','Fit'],
+      'Suzuki':['Swift','Baleno','Vitara','Ertiga','Jimny']
+    };
+    var marcaSel=document.getElementById('marca'), modeloSel=document.getElementById('modelo');
+    if(marcaSel&&modeloSel){
+      marcaSel.addEventListener('change',function(){
+        var list=MODELOS[marcaSel.value]||[];
+        var h='<option value="" selected disabled>Modelo</option>';
+        list.forEach(function(m){ h+='<option>'+m+'</option>'; });
+        modeloSel.innerHTML=h; modeloSel.disabled=!list.length;
+      });
+    }
+
+    var MAKES=[['Toyota',31],['Nissan',22],['Hyundai',14],['Kia',12],['Chevrolet',11],['Mitsubishi',9],['Honda',8],['Ford',7],['Mazda',6],['Suzuki',5]];
+    var ta=document.getElementById('typeahead'), q=document.getElementById('q'), pop=document.getElementById('taPop');
+    var taActive=-1;
+    function setOpen(o){
+      ta.classList.toggle('open',o);
+      q.setAttribute('aria-expanded',o?'true':'false');
+      if(!o){ taActive=-1; q.removeAttribute('aria-activedescendant'); }
+    }
+    function render(list){
+      var h='<div class="ta-head" aria-hidden="true">Marcas con más disponibilidad</div>';
+      list.forEach(function(m,i){ h+='<div class="ta-item" role="option" id="ta-opt-'+i+'" data-make="'+m[0]+'"><span>'+m[0]+'</span><span class="c">'+m[1]+'</span></div>'; });
+      if(!list.length) h+='<div class="ta-item"><span class="c">Sin coincidencias en inventario</span></div>';
+      pop.innerHTML=h; taActive=-1; q.removeAttribute('aria-activedescendant');
+    }
+    function filter(v){ v=(v||'').trim().toLowerCase(); return MAKES.filter(function(m){return !v||m[0].toLowerCase().indexOf(v)>-1;}).slice(0,7); }
+    q.addEventListener('focus',function(){ render(filter(q.value)); setOpen(true); });
+    q.addEventListener('input',function(){ render(filter(q.value)); if(!ta.classList.contains('open')) setOpen(true); });
+    q.addEventListener('keydown',function(e){
+      var items=pop.querySelectorAll('.ta-item[data-make]');
+      if(e.key==='Escape'){ setOpen(false); return; }
+      if(e.key==='ArrowDown'||e.key==='ArrowUp'){
+        if(!ta.classList.contains('open')){ render(filter(q.value)); setOpen(true); items=pop.querySelectorAll('.ta-item[data-make]'); }
+        if(!items.length) return;
+        e.preventDefault();
+        taActive=(taActive+(e.key==='ArrowDown'?1:-1)+items.length)%items.length;
+        items.forEach(function(it,i){ it.classList.toggle('active',i===taActive); });
+        q.setAttribute('aria-activedescendant',items[taActive].id);
+      } else if(e.key==='Enter'&&taActive>-1&&items[taActive]){
+        e.preventDefault(); q.value=items[taActive].dataset.make; setOpen(false);
+      }
+    });
+    pop.addEventListener('mousedown',function(e){ var it=e.target.closest('.ta-item'); if(!it||!it.dataset.make) return; e.preventDefault(); q.value=it.dataset.make; setOpen(false); });
+    document.addEventListener('click',function(e){ if(!ta.contains(e.target)) setOpen(false); });
+
+    /* Buscador → URL real de /comprar */
+    document.getElementById('searchForm').addEventListener('submit',function(e){
+      e.preventDefault();
+      var p=new URLSearchParams();
+      p.set('condicion',curTab);
+      if(curTab==='usado'){
+        var org=document.querySelector('[data-panel="usado"] .pill.on');
+        if(org) p.set('origen',org.getAttribute('data-origen'));
+        if(q.value.trim()) p.set('q',q.value.trim());
+        var pr=document.getElementById('precio'); if(pr.value) p.set('precio',pr.value);
+        var dp=document.getElementById('depto'); if(dp.value) p.set('depto',dp.value);
+      } else {
+        var mk=document.getElementById('marca'), md=document.getElementById('modelo');
+        if(mk.value) p.set('marca',mk.value);
+        if(md.value) p.set('modelo',md.value);
+      }
+      window.location.href='https://www.carvimax.com/comprar?'+p.toString();
+    });
+
+    /* Banner financiamiento: entrada + conteo del 100% */
+    var fb=document.getElementById('finBanner'), fpct=document.getElementById('finPct');
+    var reduceM = window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+    function animPct(){
+      if(reduceM||!fpct) return;
+      var s=null, d=750; fpct.textContent='0%';
+      setTimeout(function(){ requestAnimationFrame(function tick(t){ if(!s)s=t; var p=Math.min((t-s)/d,1); var e=1-Math.pow(1-p,3); fpct.textContent=Math.round(e*100)+'%'; if(p<1)requestAnimationFrame(tick); }); }, 180);
+    }
+    if(fb){
+      if('IntersectionObserver' in window){
+        var fio=new IntersectionObserver(function(en){ en.forEach(function(x){ if(x.isIntersecting){ x.target.classList.add('is-visible'); fio.unobserve(x.target); animPct(); } }); }, {threshold:0.4});
+        fio.observe(fb);
+      } else { fb.classList.add('is-visible'); }
+    }
+
+    /* Destacados: carrusel con flechas + entrada escalonada */
+    var track=document.getElementById('destTrack');
+    if(track){
+      var prevB=document.querySelector('.dest__arrow[data-dir="-1"]'), nextB=document.querySelector('.dest__arrow[data-dir="1"]');
+      function step(){ var c=track.querySelector('.vcard'); return c?c.offsetWidth+16:316; }
+      function upd(){ var max=track.scrollWidth-track.clientWidth-2; if(prevB)prevB.disabled=track.scrollLeft<=2; if(nextB)nextB.disabled=track.scrollLeft>=max; }
+      if(prevB)prevB.addEventListener('click',function(){ track.scrollBy({left:-step(),behavior:'smooth'}); });
+      if(nextB)nextB.addEventListener('click',function(){ track.scrollBy({left:step(),behavior:'smooth'}); });
+      track.addEventListener('scroll',upd,{passive:true});
+      window.addEventListener('resize',upd);
+      upd();
+      if('IntersectionObserver' in window){
+        var tio=new IntersectionObserver(function(en){ en.forEach(function(x){ if(x.isIntersecting){ x.target.classList.add('is-in'); tio.unobserve(x.target); } }); }, {threshold:0.2});
+        tio.observe(track);
+      } else { track.classList.add('is-in'); }
+    }
+
+    /* Vende tu carro: el carro entra manejando */
+    var sell=document.getElementById('sellBand');
+    if(sell){
+      if('IntersectionObserver' in window){
+        var sio=new IntersectionObserver(function(en){ en.forEach(function(x){ if(x.isIntersecting){ x.target.classList.add('is-in'); sio.unobserve(x.target); } }); }, {threshold:0.3});
+        sio.observe(sell);
+      } else { sell.classList.add('is-in'); }
+    }
+
+    /* Corazón: guardar con pop */
+    document.querySelectorAll('.vheart').forEach(function(h){
+      h.addEventListener('click',function(e){
+        e.preventDefault();
+        var on=h.classList.toggle('on');
+        h.setAttribute('aria-pressed', on?'true':'false');
+        if(!reduceM) h.animate([{transform:'scale(0.8)'},{transform:'scale(1.18)'},{transform:'scale(1)'}],{duration:300,easing:'cubic-bezier(0.23,1,0.32,1)'});
+      });
+    });
+
+    var els=document.querySelectorAll('.reveal:not(.is-visible)');
+    if(!('IntersectionObserver' in window)){ els.forEach(function(e){e.classList.add('is-visible');}); return; }
+    var io=new IntersectionObserver(function(en){ en.forEach(function(x){ if(x.isIntersecting){ x.target.classList.add('is-visible'); io.unobserve(x.target); } }); }, {threshold:0.16, rootMargin:'0px 0px -40px 0px'});
+    els.forEach(function(e){ io.observe(e); });
+  })();
+  </script>
+
+</body>
+</html>

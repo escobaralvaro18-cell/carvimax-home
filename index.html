@@ -10,29 +10,54 @@
 <link rel="preload" as="image" href="carvimax_hero.webp" media="(min-width:861px)">
 <style>
   :root{
-    --brand:        oklch(0.55 0.22 293);
-    --brand-strong: oklch(0.49 0.22 293);
-    --brand-tint:   oklch(0.96 0.03 293);
-    --navy:         oklch(0.24 0.07 286);
-    --navy-2:       oklch(0.17 0.055 286);
-    --surface:      oklch(0.99 0.004 293);
-    --white:        oklch(0.995 0.0015 293);
-    --card:         oklch(0.972 0.008 293);
-    --card-hover:   oklch(0.955 0.012 293);
-    --ink:          oklch(0.27 0.03 293);
-    --ink-2:        oklch(0.52 0.02 293);
-    --ink-3:        oklch(0.56 0.02 293);
-    --line:         oklch(0.92 0.01 293);
-    --line-2:       oklch(0.955 0.008 293);
-    --on-dark:      oklch(0.98 0.01 293);
-    --on-dark-2:    oklch(0.85 0.045 293);
-    --on-brand-ic:  oklch(0.86 0.09 293);
-    --on-brand-2:   oklch(0.96 0.015 293);
-    --focus:        oklch(0.55 0.22 293);
-    --lav:          oklch(0.966 0.014 293);
-    --lav-bd:       oklch(0.9 0.028 293);
+    --brand:        #7C49E3;
+    --brand-strong: #6B37D6;
+    --brand-tint:   #F1EBFC;
+    --navy:         #232045;
+    --navy-2:       #171430;
+    --surface:      #FCFCFE;
+    --white:        #FEFEFF;
+    --card:         #F6F5FA;
+    --card-hover:   #F1EFF8;
+    --ink:          #363247;
+    --ink-2:        #78748A;
+    --ink-3:        #837F94;
+    --line:         #E4E2EE;
+    --line-2:       #EFEDF6;
+    --on-dark:      #F9F8FD;
+    --on-dark-2:    #CFC8E8;
+    --on-brand-ic:  #CBBCF2;
+    --on-brand-2:   #F3F0FB;
+    --focus:        #7C49E3;
+    --lav:          #F3F0FA;
+    --lav-bd:       #DDD6EE;
     --ease:         cubic-bezier(0.16, 1, 0.3, 1);
     --maxw:1120px;
+  }
+  @supports (color: oklch(50% 0 0)){
+    :root{
+      --brand:        oklch(0.55 0.22 293);
+      --brand-strong: oklch(0.49 0.22 293);
+      --brand-tint:   oklch(0.96 0.03 293);
+      --navy:         oklch(0.24 0.07 286);
+      --navy-2:       oklch(0.17 0.055 286);
+      --surface:      oklch(0.99 0.004 293);
+      --white:        oklch(0.995 0.0015 293);
+      --card:         oklch(0.972 0.008 293);
+      --card-hover:   oklch(0.955 0.012 293);
+      --ink:          oklch(0.27 0.03 293);
+      --ink-2:        oklch(0.52 0.02 293);
+      --ink-3:        oklch(0.56 0.02 293);
+      --line:         oklch(0.92 0.01 293);
+      --line-2:       oklch(0.955 0.008 293);
+      --on-dark:      oklch(0.98 0.01 293);
+      --on-dark-2:    oklch(0.85 0.045 293);
+      --on-brand-ic:  oklch(0.86 0.09 293);
+      --on-brand-2:   oklch(0.96 0.015 293);
+      --focus:        oklch(0.55 0.22 293);
+      --lav:          oklch(0.966 0.014 293);
+      --lav-bd:       oklch(0.9 0.028 293);
+    }
   }
   *{box-sizing:border-box}
   html,body{overflow-x:hidden}
@@ -48,7 +73,7 @@
   .ic{stroke:currentColor;stroke-width:1.6;fill:none;stroke-linecap:round;stroke-linejoin:round}
 
   /* ===== Header ===== */
-  .site-header{position:sticky;top:0;z-index:50;background:color-mix(in oklch, var(--surface) 88%, transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  .site-header{position:sticky;top:0;z-index:50;background:var(--surface);background:color-mix(in oklch, var(--surface) 88%, transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
   .nav{display:flex;align-items:center;gap:12px;height:68px}
   .brand{display:flex;align-items:center;margin-right:8px}
   .brand img{height:44px;width:auto;display:block}
@@ -75,7 +100,7 @@
   @media (hover:hover) and (pointer:fine){.mobile-menu a:hover{background:var(--line-2)}}
 
   /* ===== Hero ===== */
-  .hero{position:relative;background:var(--navy)}
+  .hero{position:relative;background:var(--navy);overflow:hidden}
   @media (min-width:861px){
     .hero{background:
       linear-gradient(90deg, var(--navy) 0%, oklch(0.24 0.07 286 / 0.86) 26%, oklch(0.24 0.07 286 / 0.18) 48%, oklch(0.24 0.07 286 / 0) 66%),
@@ -131,7 +156,7 @@
 
   /* ===== Banner financiamiento (Davivienda) ===== */
   .finbanner-wrap{max-width:var(--maxw);margin:0 auto;padding:24px 24px 0}
-  .finbanner{display:flex;align-items:center;gap:18px;background:linear-gradient(180deg, oklch(0.968 0.015 293), oklch(0.955 0.022 293));border:1px solid var(--lav-bd);border-radius:18px;padding:16px 20px;
+  .finbanner{display:flex;align-items:center;gap:18px;overflow:hidden;background:var(--lav);background:linear-gradient(180deg, oklch(0.968 0.015 293), oklch(0.955 0.022 293));border:1px solid var(--lav-bd);border-radius:18px;padding:16px 20px;
     box-shadow:0 22px 48px -28px oklch(0.2 0.08 286 / 0.42);
     opacity:0;transform:translateY(10px);transition:opacity .5s var(--ease),transform .3s var(--ease),box-shadow .24s var(--ease)}
   .finbanner.is-visible{opacity:1;transform:none}
@@ -243,10 +268,10 @@
   .vcard__img{position:relative;aspect-ratio:16/10;overflow:hidden;background:var(--card)}
   .vcard__img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s var(--ease)}
   .vbadge{position:absolute;top:10px;left:10px;display:inline-flex;align-items:center;gap:5px;font-family:'Lexend',sans-serif;font-weight:600;font-size:11px;padding:4px 9px;border-radius:999px;
-    background:oklch(0.53 0.14 150);color:oklch(0.99 0.02 150);box-shadow:0 4px 12px -6px oklch(0.5 0.14 150 / 0.7)}
+    background:#1F7A4E;color:#F7FDF9;box-shadow:0 4px 12px -6px oklch(0.5 0.14 150 / 0.7)}
   .vbadge .ic{width:12px;height:12px;stroke-width:2.4;stroke:currentColor;fill:none}
   .vheart{position:absolute;top:9px;right:9px;z-index:2;width:32px;height:32px;border-radius:50%;border:none;cursor:pointer;
-    background:color-mix(in oklch, var(--white) 86%, transparent);backdrop-filter:blur(4px);color:var(--brand);display:flex;align-items:center;justify-content:center;
+    background:rgba(255,255,255,0.86);background:color-mix(in oklch, var(--white) 86%, transparent);backdrop-filter:blur(4px);color:var(--brand);display:flex;align-items:center;justify-content:center;
     transition:transform .16s var(--ease),background .2s var(--ease)}
   .vheart .ic{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;transition:fill .2s var(--ease)}
   .vheart.on .ic{fill:var(--brand)}
@@ -264,6 +289,7 @@
   /* ===== Vende tu carro ===== */
   .sell-wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px 84px}
   .sell{position:relative;overflow:hidden;border-radius:22px;color:var(--on-dark);padding:48px 44px;min-height:300px;display:flex;align-items:center;
+    background:var(--navy-2);
     background:
       linear-gradient(90deg, var(--navy-2) 0%, oklch(0.17 0.055 286 / 0.92) 30%, oklch(0.17 0.055 286 / 0.35) 52%, oklch(0.17 0.055 286 / 0) 70%),
       url("carvimax_sell.webp") center right / cover no-repeat, var(--navy-2);
@@ -314,11 +340,11 @@
     .brand img{height:38px}
     .nav__actions{gap:7px}
     .nav__actions .btn{padding:9px 14px}
-    .hero{background:linear-gradient(160deg, var(--navy) 0%, var(--navy-2) 100%)}
-    .hero__in{min-height:0;padding-block:30px 30px}
+    .hero{background:linear-gradient(180deg, var(--navy) 0%, var(--navy-2) 100%)}
+    .hero__in{min-height:0;padding-block:36px 44px}
     .hero__col{max-width:none}
     .hero__sub{max-width:none}
-    .cats-wrap{margin-top:18px;padding:0 20px}
+    .cats-wrap{margin-top:28px;padding:0 20px}
     .section{padding:40px 24px 56px}
     .conf__grid{grid-template-columns:1fr;gap:11px}
     .conf__title{max-width:none}

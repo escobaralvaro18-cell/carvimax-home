@@ -156,24 +156,16 @@
 
   /* ===== Banner financiamiento (Davivienda) ===== */
   .finbanner-wrap{max-width:var(--maxw);margin:0 auto;padding:24px 24px 0}
-  .finbanner{display:flex;align-items:center;gap:18px;overflow:hidden;background:var(--lav);background:linear-gradient(180deg, oklch(0.968 0.015 293), oklch(0.955 0.022 293));border:1px solid var(--lav-bd);border-radius:18px;padding:16px 20px;
+  .finbanner{display:flex;align-items:center;gap:18px;overflow:hidden;background:var(--white);border:1px solid var(--line);border-radius:18px;padding:18px 22px;
     box-shadow:0 22px 48px -28px oklch(0.2 0.08 286 / 0.42);
-    opacity:0;transform:translateY(10px);transition:opacity .5s var(--ease),transform .3s var(--ease),box-shadow .24s var(--ease)}
+    opacity:0;transform:translateY(10px);transition:opacity .5s var(--ease),transform .3s var(--ease)}
   .finbanner.is-visible{opacity:1;transform:none}
-  @media (hover:hover) and (pointer:fine){ .finbanner.is-visible:hover{transform:translateY(-2px);box-shadow:0 26px 56px -26px oklch(0.2 0.08 286 / 0.5)} }
   .finbanner__text{flex:1;min-width:0}
-  .finbanner__h{font-family:'Lexend',sans-serif;font-weight:600;font-size:17px;line-height:1.3;color:var(--ink);margin:0;display:flex;align-items:center;flex-wrap:wrap;gap:7px}
-  .finbanner__h b{color:var(--brand);font-weight:700}
-  .finbanner__pct{display:inline-flex;align-items:center;justify-content:center;min-width:62px;height:30px;padding:0 12px;border-radius:9px;
-    background:var(--brand);color:var(--on-dark);font-family:'Lexend',sans-serif;font-weight:800;font-size:17px;
-    box-shadow:0 6px 16px -8px oklch(0.55 0.22 293 / 0.7);transform:scale(.9);opacity:0;transition:transform .5s var(--ease),opacity .4s var(--ease)}
-  .finbanner.is-visible .finbanner__pct{transform:scale(1);opacity:1;transition-delay:.12s}
-  .finbanner__s{font-size:12.5px;color:var(--ink-2);margin:5px 0 0}
-  .finbanner__right{display:flex;align-items:center;gap:14px}
-  .finbanner__con{font-size:12.5px;color:var(--ink-3)}
-  .finbanner__logo{height:24px;width:auto;display:block}
-  .finbanner__div{width:1px;height:30px;background:var(--line);flex:none}
-  .finbanner__cta{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;font-size:13.5px}
+  .finbanner__h{font-family:'Lexend',sans-serif;font-weight:600;font-size:17px;line-height:1.3;color:var(--ink);margin:0}
+  .finbanner__h b{font-weight:700}
+  .finbanner__s{font-size:13px;color:var(--ink-2);margin:6px 0 0;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+  .finbanner__logo{height:15px;width:auto;display:block}
+  .finbanner__cta{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;font-size:13.5px;flex:none}
   .finbanner__cta svg{width:15px;height:15px;transition:transform .25s var(--ease)}
   @media (hover:hover) and (pointer:fine){ .finbanner__cta:hover svg{transform:translateX(4px)} }
 
@@ -378,11 +370,8 @@
     .footer__bottom{flex-direction:column;align-items:flex-start;gap:8px}
   }
   @media (max-width:600px){
-    .finbanner{flex-direction:column;align-items:stretch;gap:12px;padding:16px}
-    .finbanner__div{display:none}
-    .finbanner__logo{height:20px}
-    .finbanner__right{flex-wrap:wrap;row-gap:12px}
-    .finbanner__cta{flex:1 1 100%;margin-left:0;justify-content:center;padding:14px 18px}
+    .finbanner{flex-direction:column;align-items:stretch;gap:14px;padding:18px 16px}
+    .finbanner__cta{justify-content:center;padding:14px 18px}
     .finbanner-wrap{padding:20px 16px 0}
     .dest-wrap{padding:52px 16px 0}
     .dest__arrows{display:none}
@@ -401,7 +390,6 @@
 <noscript><style>
   .reveal,.finbanner,.sell__text{opacity:1 !important;transform:none !important;translate:0 !important}
   .vcard{opacity:1 !important}
-  .finbanner .finbanner__pct{opacity:1 !important;transform:none !important}
 </style></noscript>
 </head>
 <body>
@@ -573,17 +561,12 @@
   <div class="finbanner-wrap">
     <div class="finbanner" id="finBanner" role="region" aria-label="Financiamiento con Davivienda">
       <div class="finbanner__text">
-        <p class="finbanner__h">Financia el <span class="finbanner__pct" id="finPct">100%</span> de tu vehículo, desde <b>$3,000</b></p>
-        <p class="finbanner__s">Sin prima, ni prenda.</p>
+        <p class="finbanner__h">Financia el <b>100%</b> de tu vehículo, desde <b>$3,000</b></p>
+        <p class="finbanner__s">Sin prima, ni prenda · con <img class="finbanner__logo" src="Davivienda-Logo-trim.png" alt="Davivienda"></p>
       </div>
-      <div class="finbanner__right">
-        <span class="finbanner__con">con</span>
-        <img class="finbanner__logo" src="Davivienda-Logo-trim.png" alt="Davivienda">
-        <span class="finbanner__div" aria-hidden="true"></span>
-        <a href="#" class="btn btn--primary finbanner__cta">Precalificarme
-          <svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </a>
-      </div>
+      <a href="#" class="btn btn--primary finbanner__cta">Precalificarme
+        <svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
     </div>
   </div>
 
@@ -893,17 +876,12 @@
       window.location.href='https://www.carvimax.com/comprar?'+p.toString();
     });
 
-    /* Banner financiamiento: entrada + conteo del 100% */
-    var fb=document.getElementById('finBanner'), fpct=document.getElementById('finPct');
+    /* Banner financiamiento: entrada */
+    var fb=document.getElementById('finBanner');
     var reduceM = window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches;
-    function animPct(){
-      if(reduceM||!fpct) return;
-      var s=null, d=750; fpct.textContent='0%';
-      setTimeout(function(){ requestAnimationFrame(function tick(t){ if(!s)s=t; var p=Math.min((t-s)/d,1); var e=1-Math.pow(1-p,3); fpct.textContent=Math.round(e*100)+'%'; if(p<1)requestAnimationFrame(tick); }); }, 180);
-    }
     if(fb){
       if('IntersectionObserver' in window){
-        var fio=new IntersectionObserver(function(en){ en.forEach(function(x){ if(x.isIntersecting){ x.target.classList.add('is-visible'); fio.unobserve(x.target); animPct(); } }); }, {threshold:0.4});
+        var fio=new IntersectionObserver(function(en){ en.forEach(function(x){ if(x.isIntersecting){ x.target.classList.add('is-visible'); fio.unobserve(x.target); } }); }, {threshold:0.4});
         fio.observe(fb);
       } else { fb.classList.add('is-visible'); }
     }

@@ -94,6 +94,7 @@
   .btn:active{transform:scale(.98)}
   .btn--ghost{background:transparent;border-color:var(--line);color:var(--ink)}
   .btn--primary{background:var(--brand);color:var(--on-dark)}
+  .hdr-search{display:none}
   .hamburger{display:none;background:transparent;border:1px solid var(--line);border-radius:12px;width:44px;height:44px;align-items:center;justify-content:center;color:var(--ink);cursor:pointer;transition:transform .2s var(--ease)}
   .hamburger:active{transform:scale(.95)}
   @media (hover:hover) and (pointer:fine){
@@ -357,6 +358,15 @@
     .hero h1{text-align:center}
     .hero__sub{max-width:none;text-align:center}
 
+    .hdr-search{display:flex;align-items:center;gap:8px;flex:1;min-width:0;height:40px;padding:0 14px;
+      background:var(--white);border:1px solid var(--line);border-radius:var(--r-ctl);color:var(--ink-3);
+      font-family:inherit;font-size:13.5px;cursor:pointer;
+      opacity:0;transform:translateY(-6px);pointer-events:none;visibility:hidden;position:absolute;
+      transition:opacity .3s var(--ease),transform .3s var(--ease)}
+    .hdr-search .ic{flex:none}
+    .hdr-search__txt{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .site-header.past-hero .hdr-search{opacity:1;transform:none;pointer-events:auto;visibility:visible;position:static}
+    .site-header.past-hero .nav__actions .btn{display:none}
     .search-trigger{display:flex;width:100%;align-items:center;gap:10px;background:var(--white);border:none;border-radius:16px;padding:6px 6px 6px 16px;
       font-family:inherit;font-size:15px;color:var(--ink-3);cursor:pointer;box-shadow:0 18px 40px -18px oklch(0.12 0.05 286 / 0.75)}
     .search-trigger>.ic{width:18px;height:18px;flex:none}
@@ -457,6 +467,10 @@
       <a href="#" class="brand" aria-label="Carvimax, ir al inicio">
         <img src="CarvimaxLogo.avif" alt="Carvimax">
       </a>
+      <button type="button" class="hdr-search" id="hdrSearch" aria-haspopup="dialog" aria-controls="searchWrap">
+        <svg class="ic" viewBox="0 0 24 24" width="15" height="15"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <span class="hdr-search__txt">Busca por marca o modelo</span>
+      </button>
       <nav class="nav__links" aria-label="Principal">
         <a href="https://www.carvimax.com/comprar">Comprar</a>
         <a href="#">Financiamiento</a>
@@ -472,6 +486,8 @@
       </div>
     </div>
     <div class="mobile-menu" id="mobileMenu">
+      <a href="#">Acceder</a>
+      <a href="https://www.carvimax.com/sell">Vender mi vehículo</a>
       <a href="https://www.carvimax.com/comprar">Comprar</a>
       <a href="#">Financiamiento</a>
       <a href="#">Seguros</a>
@@ -836,9 +852,17 @@
     ham.addEventListener('click',function(){ var o=menu.classList.toggle('open'); ham.setAttribute('aria-expanded',o?'true':'false'); });
     function closeMenu(){ if(menu.classList.contains('open')){ menu.classList.remove('open'); ham.setAttribute('aria-expanded','false'); } }
     var hdr=document.querySelector('.site-header'), hdrTick=false;
+    var heroEl=document.querySelector('.hero'), heroBottom=0;
+    function measureHero(){ heroBottom = heroEl ? heroEl.offsetTop + heroEl.offsetHeight : 0; }
+    measureHero();
+    window.addEventListener('resize',measureHero);
     function hdrScroll(){
       if(hdrTick) return; hdrTick=true;
-      requestAnimationFrame(function(){ hdr.classList.toggle('is-scrolled', window.scrollY>8); hdrTick=false; });
+      requestAnimationFrame(function(){
+        hdr.classList.toggle('is-scrolled', window.scrollY>8);
+        hdr.classList.toggle('past-hero', window.scrollY > heroBottom - 72);
+        hdrTick=false;
+      });
     }
     document.addEventListener('scroll',hdrScroll,{passive:true});
     hdrScroll();
@@ -994,12 +1018,16 @@
         if(marcaSel&&marcaSel.value) parts.push(marcaSel.value);
         if(modeloSel&&modeloSel.value) parts.push(modeloSel.value);
       }
+      var txt = parts.length<=1 ? 'Busca por marca o modelo' : parts.slice(0,3).join(' · ');
       var span=sTrig.querySelector('span');
-      if(parts.length<=1){ span.textContent='Busca por marca o modelo'; span.style.color=''; }
-      else { span.textContent=parts.slice(0,3).join(' · '); span.style.color='var(--ink)'; }
+      span.textContent=txt; span.style.color = parts.length<=1 ? '' : 'var(--ink)';
+      var hs=document.querySelector('.hdr-search__txt');
+      if(hs){ hs.textContent=txt; hs.style.color = parts.length<=1 ? '' : 'var(--ink)'; }
     }
+    var lastOpener=null;
     function openSearch(){
       closeMenu();
+      if(!lastOpener) lastOpener=sTrig;
       sWrap.classList.add('open');
       document.documentElement.classList.add('no-scroll');
       sWrap.setAttribute('aria-modal','true');
@@ -1011,9 +1039,12 @@
       document.documentElement.classList.remove('no-scroll');
       sWrap.removeAttribute('aria-modal');
       trigSummary();
-      if(sTrig) sTrig.focus();
+      if(lastOpener){ lastOpener.focus(); lastOpener=null; }
+      else if(sTrig) sTrig.focus();
     }
     if(sTrig&&sWrap){ sTrig.addEventListener('click',openSearch); }
+    var hdrSearchBtn=document.getElementById('hdrSearch');
+    if(hdrSearchBtn&&sWrap){ hdrSearchBtn.addEventListener('click',function(){ lastOpener=hdrSearchBtn; openSearch(); }); }
     if(sClose){ sClose.addEventListener('click',closeSearch); }
     document.addEventListener('keydown',function(e){
       if(e.key!=='Escape') return;

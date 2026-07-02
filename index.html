@@ -170,17 +170,20 @@
 
   /* ===== Banner financiamiento (Davivienda) ===== */
   .finbanner-wrap{max-width:var(--maxw);margin:0 auto;padding:24px 24px 0}
-  .finbanner{display:flex;align-items:center;gap:18px;overflow:hidden;background:linear-gradient(120deg, var(--navy), #2C2358);border-radius:var(--r-card);padding:20px 24px;
+  .finbanner{display:flex;align-items:center;gap:18px;overflow:hidden;background:var(--white);border:1px solid var(--line);border-radius:var(--r-card);padding:18px 24px;
     box-shadow:var(--shadow-card);
     opacity:0;transform:translateY(10px);transition:opacity .5s var(--ease),transform .3s var(--ease)}
   .finbanner.is-visible{opacity:1;transform:none}
+  .finbanner__lead{display:flex;align-items:center;gap:20px;flex:1;min-width:0}
+  .finbanner__num{display:flex;align-items:baseline;flex:none;font-family:'Lexend',sans-serif;font-weight:600;color:var(--brand);font-size:40px;line-height:1}
+  .finbanner__num span{font-size:22px}
+  .finbanner__div{width:1px;align-self:stretch;min-height:44px;background:var(--line-2, var(--line));flex:none}
+  .finbanner__s.finbanner__s--m{display:none}
   .finbanner__text{flex:1;min-width:0}
-  .finbanner__h{font-family:'Lexend',sans-serif;font-weight:600;font-size:17px;line-height:1.3;color:var(--on-dark);margin:0}
+  .finbanner__h{font-family:'Lexend',sans-serif;font-weight:600;font-size:17px;line-height:1.3;color:var(--ink);margin:0}
   .finbanner__h b{font-weight:700}
-  .finbanner__h .hl{color:#B79BF3}
-  .finbanner__s{font-size:13.5px;color:var(--on-dark-2);margin:7px 0 0;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
-  .finbanner__logo{height:14px;width:auto;display:block}
-  .finbanner__logochip{display:inline-flex;align-items:center;background:var(--white);border-radius:6px;padding:3px 8px}
+  .finbanner__s{font-size:13.5px;color:var(--ink-2);margin:6px 0 0;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+  .finbanner__logo{height:15px;width:auto;display:block}
   .finbanner__cta{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;font-size:13.5px;flex:none}
   .finbanner__cta svg{width:15px;height:15px;transition:transform .25s var(--ease)}
   @media (hover:hover) and (pointer:fine){ .finbanner__cta:hover svg{transform:translateX(4px)} }
@@ -446,8 +449,13 @@
     .footer__bottom{flex-direction:column;align-items:flex-start;gap:8px}
   }
   @media (max-width:600px){
-    .finbanner{flex-direction:column;align-items:stretch;gap:14px;padding:18px 16px}
-    .finbanner__cta{justify-content:center;padding:14px 18px}
+    .finbanner{flex-direction:column;align-items:stretch;gap:12px;padding:18px 16px}
+    .finbanner__lead{gap:14px}
+    .finbanner__num{font-size:34px}
+    .finbanner__num span{font-size:19px}
+    .finbanner__text .finbanner__s{display:none}
+    .finbanner__s.finbanner__s--m{display:flex;margin:0}
+    .finbanner__cta{justify-content:center;padding:14px 18px;margin-top:2px}
     .finbanner-wrap{padding:20px 16px 0}
     .dest-wrap{padding:52px 16px 0}
     .dest__arrows{display:none}
@@ -669,10 +677,15 @@
   <!-- ===================== BANNER FINANCIAMIENTO ===================== -->
   <div class="finbanner-wrap">
     <div class="finbanner" id="finBanner" role="region" aria-label="Financiamiento con Davivienda">
-      <div class="finbanner__text">
-        <p class="finbanner__h">Financia el <b class="hl">100%</b> de tu vehículo, desde <b>$3,000</b></p>
-        <p class="finbanner__s">Sin prima ni prenda · con <span class="finbanner__logochip"><img class="finbanner__logo" src="Davivienda-Logo-trim.png" alt="Davivienda"></span></p>
+      <div class="finbanner__lead">
+        <div class="finbanner__num">100<span>%</span></div>
+        <div class="finbanner__div" aria-hidden="true"></div>
+        <div class="finbanner__text">
+        <p class="finbanner__h">Financia tu vehículo, desde <b>$3,000</b></p>
+        <p class="finbanner__s">Sin prima ni prenda · con <img class="finbanner__logo" src="Davivienda-Logo-trim.png" alt="Davivienda"></p>
+        </div>
       </div>
+      <p class="finbanner__s finbanner__s--m" aria-hidden="true">Sin prima ni prenda · con <img class="finbanner__logo" src="Davivienda-Logo-trim.png" alt=""></p>
       <a href="#" class="btn btn--primary finbanner__cta">Precalificarme
         <svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </a>

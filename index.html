@@ -108,7 +108,7 @@
   @media (hover:hover) and (pointer:fine){.mobile-menu a:hover{background:var(--line-2)}}
 
   /* ===== Hero ===== */
-  .hero{position:relative;background:var(--navy);overflow:hidden}
+  .hero{position:relative;background:var(--navy)}
   @media (min-width:861px){
     .hero{background:
       linear-gradient(90deg, var(--navy) 0%, oklch(0.24 0.07 286 / 0.86) 26%, oklch(0.24 0.07 286 / 0.18) 48%, oklch(0.24 0.07 286 / 0) 66%),
@@ -120,7 +120,7 @@
   .hero h1 .hnw{white-space:nowrap}
   .hero__sub{font-size:clamp(15px,1.7vw,17px);color:var(--on-dark-2);margin:0 0 24px;max-width:40ch}
 
-  .search{background:var(--white);border-radius:20px;box-shadow:0 34px 70px -34px oklch(0.2 0.08 286 / 0.7);padding:16px}
+  .search{position:relative;z-index:12;background:var(--white);border-radius:20px;box-shadow:0 34px 70px -34px oklch(0.2 0.08 286 / 0.7);padding:16px}
   .search-trigger{display:none}
   .search-head{display:none}
   .flabel{display:none}

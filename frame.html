@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>frame</title>
+<style>
+  body{margin:0;background:#1a1730;display:flex;justify-content:center;padding:24px 0}
+  iframe{width:392px;height:1600px;border:none;background:#fff;border-radius:24px;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+</style></head>
+<body>
+<iframe id="f"></iframe>
+<script>
+  const p=new URLSearchParams(location.search);
+  document.getElementById('f').src=p.get('u')||'index.html';
+</script>
+</body></html>

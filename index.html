@@ -197,8 +197,8 @@
   .cc-btn:active{transform:scale(.97)}
   .cc-btn .ic{width:15px;height:15px;transition:transform .25s var(--ease)}
 
+  .cc-head{display:flex;align-items:center;gap:13px;margin-bottom:14px}
   .ccard--verified{background:var(--brand);color:var(--on-dark);position:relative;overflow:hidden;box-shadow:0 22px 48px -26px oklch(0.45 0.2 293 / 0.5)}
-  .ccard--verified .cc-head{display:flex;align-items:center;gap:13px;margin-bottom:14px}
   .ccard--verified .cc-icon{background:oklch(1 0 0 / 0.16);color:var(--on-dark)}
   .ccard--verified .cc-title{color:var(--on-dark)}
   .ccard--verified .cc-sub{font-size:13.5px;color:var(--on-brand-2);margin:2px 0 0}
@@ -208,11 +208,16 @@
   .cc-btn--onbrand{background:var(--white);color:var(--brand-strong)}
   .ccard--verified::after{content:"";position:absolute;right:-60px;top:-60px;width:180px;height:180px;border-radius:50%;background:oklch(1 0 0 / 0.06);pointer-events:none}
 
-  .ccard--seguros{background:var(--white);border:1px solid var(--line);justify-content:space-between;box-shadow:var(--shadow-card)}
-  .ccard--seguros .cc-icon{background:var(--brand-tint);color:var(--brand);margin-bottom:14px}
+  .ccard--seguros{background:var(--white);border:1px solid var(--line);box-shadow:var(--shadow-card)}
+  .ccard--seguros .cc-icon{background:var(--brand-tint);color:var(--brand)}
   .ccard--seguros .cc-title{color:var(--ink)}
-  .ccard--seguros .cc-sub{font-size:13.5px;color:var(--ink-2);margin:4px 0 0}
-  .cc-partner{display:flex;align-items:center;gap:9px;margin-bottom:14px}
+  .ccard--seguros .cc-sub{font-size:13.5px;color:var(--ink-2);margin:2px 0 0}
+  .ccard--seguros .cc-checks{grid-template-columns:1fr;border-top-color:var(--line-2)}
+  .ccard--seguros .cc-checks li{color:var(--ink-2)}
+  .ccard--seguros .cc-checks .ic{stroke:var(--brand)}
+  .cc-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:auto}
+  .cc-foot .cc-btn{margin-top:0;align-self:auto}
+  .cc-partner{display:flex;align-items:center;gap:9px}
   .cc-con{font-size:12.5px;color:var(--ink-3)}
   .cc-acsa{height:20px;width:auto;display:block}
   .cc-btn--ghost{background:transparent;border-color:oklch(0.86 0.06 293);color:var(--brand)}
@@ -385,6 +390,8 @@
     .conf__sub{max-width:none}
     .cc-checks{grid-template-columns:1fr}
     .cc-btn{width:100%;justify-content:center;align-self:stretch}
+    .cc-foot{flex-direction:column-reverse;align-items:flex-start}
+    .cc-foot .cc-btn{width:100%;justify-content:center}
     .cats__grid{display:flex;overflow-x:auto;gap:10px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:4px;scrollbar-width:none}
     .cats__grid::-webkit-scrollbar{display:none}
     .cat{flex:0 0 38%;min-width:120px;scroll-snap-align:start;padding:12px 6px}
@@ -733,20 +740,27 @@
 
       <!-- Seguros -->
       <article class="ccard ccard--seguros reveal">
-        <span class="cc-icon" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24"><path d="M12 3c5 0 9 3.2 9 7H3c0-3.8 4-7 9-7z"/><path d="M12 10v8a2.2 2.2 0 0 1-4.2 0"/></svg></span>
-        <div>
-          <h3 class="cc-title">Seguros</h3>
-          <p class="cc-sub">Cotiza y contrata la póliza de tu vehículo aquí mismo, sin vueltas.</p>
-        </div>
-        <div>
-          <div class="cc-partner">
-            <span class="cc-con">con</span>
-            <img class="cc-acsa" src="logo-acsa-seguros.avif" alt="ACSA">
+        <div class="cc-head">
+          <span class="cc-icon" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24"><path d="M12 3c5 0 9 3.2 9 7H3c0-3.8 4-7 9-7z"/><path d="M12 10v8a2.2 2.2 0 0 1-4.2 0"/></svg></span>
+          <div>
+            <h3 class="cc-title">Seguros</h3>
+            <p class="cc-sub">Tu póliza, aquí mismo.</p>
           </div>
+        </div>
+        <ul class="cc-checks">
+          <li><svg class="ic" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Cotización en línea, en minutos</li>
+          <li><svg class="ic" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Daños, robo y responsabilidad civil</li>
+          <li><svg class="ic" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Emisión y pago sin papeleo</li>
+        </ul>
+        <div class="cc-foot">
           <a href="https://www.carvimax.com/portal/seguros" class="cc-btn cc-btn--ghost">
             Cotizar seguro
             <svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>
+          <span class="cc-partner">
+            <span class="cc-con">con</span>
+            <img class="cc-acsa" src="logo-acsa-seguros.avif" alt="ACSA">
+          </span>
         </div>
       </article>
     </div>

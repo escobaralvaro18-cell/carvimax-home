@@ -352,11 +352,11 @@
     .brand img{height:38px}
     .nav__actions{gap:7px}
     .nav__actions .btn{padding:9px 14px}
-    .hero{background:linear-gradient(180deg, var(--navy) 0%, var(--navy-2) 100%)}
-    .hero .hero__in{min-height:0;padding-block:52px 44px}
+    .hero{background:radial-gradient(120% 110% at 50% -25%, rgba(143,95,239,.85) 0%, rgba(143,95,239,0) 58%), linear-gradient(175deg,#6B37D6 0%,#4A2098 100%)}
+    .hero .hero__in{min-height:0;padding-block:30px 28px}
     .hero__col{max-width:none}
-    .hero h1{text-align:center}
-    .hero__sub{max-width:none;text-align:center}
+    .hero h1{text-align:center;font-size:clamp(18px,5.9vw,24px);white-space:nowrap;margin:0 0 8px}
+    .hero__sub{max-width:none;text-align:center;font-size:clamp(12.5px,3.6vw,14px);white-space:nowrap;color:#EDE6FC;margin:0 0 18px}
 
     .hdr-search{display:flex;align-items:center;gap:8px;flex:1;min-width:0;height:40px;padding:0 14px;
       background:var(--white);border:1px solid var(--line);border-radius:var(--r-ctl);color:var(--ink-3);
@@ -514,7 +514,7 @@
     <div class="container hero__in">
       <div class="hero__col">
         <h1 class="reveal is-visible">Encuentra tu <span class="hnw">vehículo ideal</span></h1>
-        <p class="hero__sub reveal d1">La forma más transparente, rápida y confiable de comprar o vender vehículos.</p>
+        <p class="hero__sub reveal d1">Compra y vende con confianza en El Salvador.</p>
 
         <button type="button" class="search-trigger reveal d2" id="searchTrigger" aria-haspopup="dialog" aria-controls="searchWrap">
           <svg class="ic" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>

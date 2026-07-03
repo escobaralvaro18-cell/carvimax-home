@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Resultados — Carvimax</title>
+<meta name="description" content="Explora el inventario de vehículos verificados de Carvimax y filtra por precio, año, kilometraje, marca, ubicación y más.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --brand:#7C49E3; --brand-strong:#6B37D6; --brand-tint:#F1EBFC;
+    --navy:#232045; --navy-2:#171430;
+    --surface:#FCFCFE; --white:#FEFEFF; --card:#F6F5FA; --card-hover:#F1EFF8;
+    --ink:#363247; --ink-2:#78748A; --ink-3:#837F94;
+    --line:#E4E2EE; --line-2:#EFEDF6;
+    --on-dark:#F9F8FD; --on-dark-2:#CFC8E8;
+    --focus:#7C49E3; --lav:#F3F0FA; --lav-bd:#DDD6EE;
+    --ease:cubic-bezier(0.16,1,0.3,1);
+    --maxw:1120px; --r-ctl:12px; --r-card:18px;
+    --shadow-card:0 22px 48px -28px rgba(28,24,64,0.42);
+  }
+  @supports (color: oklch(50% 0 0)){
+    :root{
+      --brand:oklch(0.55 0.22 293); --brand-strong:oklch(0.49 0.22 293); --brand-tint:oklch(0.96 0.03 293);
+      --navy:oklch(0.24 0.07 286); --navy-2:oklch(0.17 0.055 286);
+      --surface:oklch(0.99 0.004 293); --white:oklch(0.995 0.0015 293); --card:oklch(0.972 0.008 293); --card-hover:oklch(0.955 0.012 293);
+      --ink:oklch(0.27 0.03 293); --ink-2:oklch(0.52 0.02 293); --ink-3:oklch(0.56 0.02 293);
+      --line:oklch(0.92 0.01 293); --line-2:oklch(0.955 0.008 293);
+      --on-dark:oklch(0.98 0.01 293); --on-dark-2:oklch(0.85 0.045 293);
+      --focus:oklch(0.55 0.22 293); --lav:oklch(0.966 0.014 293); --lav-bd:oklch(0.9 0.028 293);
+    }
+  }
+  *{box-sizing:border-box}
+  html,body{overflow-x:hidden;overflow-x:clip}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--surface);color:var(--ink);
+    font-family:'Source Sans 3',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .lex{font-family:'Lexend',sans-serif}
+  svg{display:block}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+  :where(a,button,input,select):focus-visible{outline:2px solid var(--focus);outline-offset:3px;border-radius:8px}
+  .ic{stroke:currentColor;stroke-width:1.6;fill:none;stroke-linecap:round;stroke-linejoin:round}
+  .container{max-width:var(--maxw);margin:0 auto;padding:0 24px;width:100%}
+
+  /* ===== Header ===== */
+  .site-header{position:sticky;top:0;z-index:50;background:var(--surface);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;gap:14px;height:64px}
+  .brand img{height:38px;width:auto;display:block}
+  .hd-search{flex:1;max-width:440px;display:flex;align-items:center;gap:8px;background:var(--white);border:1px solid var(--line);border-radius:var(--r-ctl);padding:0 12px;height:42px}
+  .hd-search .ic{width:16px;height:16px;color:var(--ink-3);flex:none}
+  .hd-search input{border:none;outline:none;background:transparent;font-family:inherit;font-size:14px;color:var(--ink);width:100%;padding:0}
+  .hd-search input::placeholder{color:var(--ink-3)}
+  .hd-clear{background:transparent;border:none;color:var(--ink-3);cursor:pointer;padding:4px;display:none;flex:none}
+  .hd-clear.show{display:block}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:'Lexend',sans-serif;font-weight:600;font-size:14px;
+    border-radius:12px;padding:10px 18px;cursor:pointer;border:1px solid transparent;white-space:nowrap;
+    transition:transform .25s var(--ease),background .25s var(--ease)}
+  .btn:active{transform:scale(.98)}
+  .btn--primary{background:var(--brand);color:var(--on-dark);margin-left:auto}
+  @media (hover:hover){ .btn--primary:hover{background:var(--brand-strong)} }
+
+  /* ===== Layout ===== */
+  .page{max-width:var(--maxw);margin:0 auto;padding:20px 24px 70px;display:flex;gap:24px;align-items:flex-start}
+
+  /* ===== Sidebar (desktop) ===== */
+  .filters{width:256px;flex:none;background:var(--white);border:1px solid var(--line-2);border-radius:var(--r-card);padding:18px;position:sticky;top:84px;
+    max-height:calc(100vh - 104px);overflow-y:auto}
+  .fgroup{padding:2px 0 14px;border-bottom:1px solid var(--line-2);margin-bottom:14px}
+  .fgroup:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+  .fgroup h3{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin:0 0 9px;font-family:inherit}
+  .fopt{display:flex;align-items:center;gap:9px;font-size:14px;color:var(--ink);padding:4px 0;cursor:pointer;user-select:none;position:relative}
+  .fopt input{position:absolute;opacity:0;pointer-events:none}
+  .cbox{width:17px;height:17px;border:1.5px solid var(--line);border-radius:5px;flex:none;display:flex;align-items:center;justify-content:center;background:var(--white);transition:background .15s var(--ease),border-color .15s var(--ease)}
+  .cbox svg{width:11px;height:11px;color:var(--on-dark);opacity:0;stroke-width:2.6}
+  .fopt input:checked ~ .cbox{background:var(--brand);border-color:var(--brand)}
+  .fopt input:checked ~ .cbox svg{opacity:1}
+  .fopt input:focus-visible ~ .cbox{outline:2px solid var(--focus);outline-offset:2px}
+  .fopt .n{margin-left:auto;font-size:12px;color:var(--ink-3)}
+  .vermas{background:none;border:none;color:var(--brand);font-family:inherit;font-size:13px;cursor:pointer;padding:4px 0 0}
+
+  /* Sliders */
+  .range-wrap{position:relative;height:26px;margin:6px 2px 2px}
+  .range-track{position:absolute;left:0;right:0;top:11px;height:4px;background:var(--line);border-radius:2px}
+  .range-fill{position:absolute;top:11px;height:4px;background:var(--brand);border-radius:2px}
+  .range-wrap input[type=range]{position:absolute;left:0;right:0;top:0;width:100%;margin:0;height:26px;background:none;-webkit-appearance:none;appearance:none;pointer-events:none}
+  .range-wrap input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;background:var(--white);border:2.5px solid var(--brand);cursor:pointer;pointer-events:auto;box-shadow:0 2px 6px rgba(28,24,64,.2)}
+  .range-wrap input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--white);border:2.5px solid var(--brand);cursor:pointer;pointer-events:auto;box-shadow:0 2px 6px rgba(28,24,64,.2)}
+  .range-lbl{font-size:13px;color:var(--ink-2);margin:4px 0 0}
+
+  /* ===== Results ===== */
+  .results{flex:1;min-width:0}
+  .rbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+  .rcount{font-size:14.5px;color:var(--ink);margin:0}
+  .rcount b{font-family:'Lexend',sans-serif;font-weight:600}
+  .selwrap{position:relative}
+  .selwrap select{appearance:none;-webkit-appearance:none;font-family:inherit;font-size:13.5px;color:var(--ink);background:var(--white);border:1px solid var(--line);border-radius:10px;padding:8px 32px 8px 12px;cursor:pointer}
+  .selwrap .chev{position:absolute;right:10px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:var(--ink-3);pointer-events:none}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px}
+  .chips:empty{margin-bottom:0}
+  .chip{display:inline-flex;align-items:center;gap:6px;background:var(--brand-tint);border:1px solid var(--lav-bd);color:var(--brand-strong);
+    font-size:12.5px;font-weight:600;border-radius:99px;padding:5px 11px;cursor:pointer;font-family:inherit;transition:background .15s var(--ease)}
+  .chip svg{width:11px;height:11px;stroke-width:2.4}
+  .chip-clear{background:none;border:none;color:var(--brand);font-size:12.5px;font-family:inherit;cursor:pointer;padding:5px 4px}
+
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .vcard{background:var(--white);border:1px solid var(--line-2);border-radius:var(--r-card);overflow:hidden;display:flex;flex-direction:column;
+    transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
+  @media (hover:hover){ .vcard:hover{transform:translateY(-3px);box-shadow:var(--shadow-card)} }
+  .vimg{aspect-ratio:16/9;background:linear-gradient(160deg,#EDEAF6,#E2DCEF);display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+  .vimg img{width:78%;height:auto;object-fit:contain}
+  .vimg img.foto{width:100%;height:100%;object-fit:cover}
+  .vbadge{position:absolute;top:9px;left:9px;background:var(--navy);color:var(--on-dark);font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;border-radius:6px;padding:3px 8px;font-family:'Lexend',sans-serif}
+  .vbody{padding:12px 14px 14px}
+  .vt{font-family:'Lexend',sans-serif;font-weight:600;font-size:15px;color:var(--ink);margin:0;letter-spacing:-0.01em}
+  .vm{font-size:12.5px;color:var(--ink-3);margin:3px 0 7px}
+  .vfoot{display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .vp{font-family:'Lexend',sans-serif;font-weight:700;font-size:16px;color:var(--brand-strong);margin:0}
+  .vtags{display:flex;gap:4px}
+  .vtag{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:600;color:var(--ink-2);background:var(--card);border-radius:5px;padding:2px 6px}
+  .vtag .ic{width:10px;height:10px;stroke-width:2.2;color:var(--brand)}
+  .vempty{padding:60px 20px;text-align:center;color:var(--ink-2);background:var(--white);border:1px dashed var(--line);border-radius:var(--r-card)}
+  .vempty b{font-family:'Lexend',sans-serif;color:var(--ink)}
+
+  /* ===== Mobile ===== */
+  .mbar{display:none}
+  .sheet-back{display:none}
+  @media (max-width:860px){
+    .page{flex-direction:column;padding:12px 16px 60px;gap:0}
+    .filters{display:none}
+    .grid{grid-template-columns:repeat(2,1fr);gap:10px}
+    .vt{font-size:13.5px}
+    .vm{font-size:11.5px}
+    .vp{font-size:14px}
+    .vbody{padding:10px 11px 12px}
+    .vtags{display:none}
+    .nav{height:58px;gap:10px}
+    .brand img{height:32px}
+    .nav .btn--primary{display:none}
+    .hd-search{max-width:none;height:40px;border-radius:99px}
+    .mbar{display:flex;align-items:center;gap:7px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;margin:0 -16px 12px;padding:2px 16px}
+    .mbar::-webkit-scrollbar{display:none}
+    .mfilters{flex:none;display:inline-flex;align-items:center;gap:7px;background:var(--white);border:1px solid var(--line);border-radius:99px;
+      padding:8px 15px;font-family:inherit;font-size:13.5px;font-weight:600;color:var(--ink);cursor:pointer;position:relative}
+    .mfilters .ic{width:15px;height:15px}
+    .mfilters .badge{background:var(--brand);color:var(--on-dark);border-radius:99px;min-width:18px;height:18px;
+      font-size:11px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;padding:0 4px}
+    .mbar .chip{flex:none}
+    .chips{display:none}
+    .rbar{flex-wrap:wrap}
+
+    .sheet-back{display:block;position:fixed;inset:0;background:rgba(23,20,48,.45);z-index:90;opacity:0;visibility:hidden;transition:opacity .25s var(--ease),visibility 0s linear .25s}
+    .sheet-back.open{opacity:1;visibility:visible;transition:opacity .25s var(--ease),visibility 0s}
+    .sheet{position:fixed;left:0;right:0;bottom:0;z-index:95;background:var(--white);border-radius:20px 20px 0 0;box-shadow:0 -16px 44px rgba(23,20,48,.25);
+      max-height:84vh;display:flex;flex-direction:column;
+      transform:translateY(100%);visibility:hidden;transition:transform .32s var(--ease),visibility 0s linear .32s}
+    .sheet.open{transform:none;visibility:visible;transition:transform .38s var(--ease),visibility 0s}
+    .sheet-head{display:flex;align-items:center;justify-content:space-between;padding:14px 18px 10px;border-bottom:1px solid var(--line-2);flex:none}
+    .sheet-head b{font-family:'Lexend',sans-serif;font-size:16px;color:var(--ink)}
+    .sheet-close{background:var(--card);border:none;border-radius:10px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;color:var(--ink);cursor:pointer}
+    .sheet-body{overflow-y:auto;padding:6px 18px 10px;flex:1}
+    .sheet-body .fgroup{padding:12px 0}
+    .sheet-foot{flex:none;padding:12px 18px calc(14px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line-2);display:flex;gap:10px}
+    .sheet-foot .limpiar{flex:none;background:transparent;border:1px solid var(--line);border-radius:12px;padding:12px 16px;font-family:'Lexend',sans-serif;font-weight:600;font-size:14px;color:var(--ink);cursor:pointer}
+    .sheet-foot .aplicar{flex:1;background:var(--brand);border:none;border-radius:12px;padding:13px 0;font-family:'Lexend',sans-serif;font-weight:600;font-size:15px;color:var(--on-dark);cursor:pointer}
+    .sheet-foot .aplicar:active{transform:scale(.98)}
+    body.sheet-lock{overflow:hidden}
+  }
+  @media (min-width:861px){ .sheet{display:none} }
+  @media (prefers-reduced-motion:reduce){ *{transition-duration:.001ms !important} }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container nav">
+    <a href="index.html" class="brand" aria-label="Carvimax, ir al inicio"><img src="CarvimaxLogo.avif" alt="Carvimax" width="150" height="44"></a>
+    <div class="hd-search">
+      <svg class="ic" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <label class="sr-only" for="hq">Busca por marca o modelo</label>
+      <input id="hq" type="search" placeholder="Busca por marca o modelo" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="search">
+      <button class="hd-clear" id="hqClear" aria-label="Borrar búsqueda"><svg class="ic" viewBox="0 0 24 24" width="14" height="14"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <a href="index.html#vender" class="btn btn--primary">Vender</a>
+  </div>
+</header>
+
+<main class="page">
+  <aside class="filters" aria-label="Filtros" id="filtersSrc"><!-- construido por JS --></aside>
+
+  <section class="results">
+    <div class="mbar" id="mbar">
+      <button type="button" class="mfilters" id="openSheet" aria-haspopup="dialog" aria-controls="sheet">
+        <svg class="ic" viewBox="0 0 24 24"><path d="M4 7h16M7 12h10M10 17h4"/></svg>
+        Filtros<span class="badge" id="fbadge" hidden>0</span>
+      </button>
+      <!-- chips móviles se insertan aquí -->
+    </div>
+
+    <div class="rbar">
+      <p class="rcount" id="rcount"></p>
+      <div class="selwrap">
+        <label class="sr-only" for="sort">Ordenar</label>
+        <select id="sort">
+          <option value="recientes">Más recientes</option>
+          <option value="precio-asc">Precio: menor a mayor</option>
+          <option value="precio-desc">Precio: mayor a menor</option>
+          <option value="km">Menos kilometraje</option>
+          <option value="anio">Año: más nuevo</option>
+        </select>
+        <svg class="ic chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+    </div>
+    <div class="chips" id="chips"></div>
+    <div class="grid" id="grid"></div>
+    <div class="vempty" id="empty" hidden>
+      <p style="margin:0 0 6px"><b>Sin resultados con estos filtros</b></p>
+      <p style="margin:0;font-size:14px">Prueba ampliar el rango de precio o quitar algún filtro.</p>
+    </div>
+  </section>
+</main>
+
+<div class="sheet-back" id="sheetBack"></div>
+<div class="sheet" id="sheet" role="dialog" aria-label="Filtros" tabindex="-1">
+  <div class="sheet-head">
+    <b>Filtros</b>
+    <button type="button" class="sheet-close" id="closeSheet" aria-label="Cerrar filtros"><svg class="ic" viewBox="0 0 24 24" width="15" height="15"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+  <div class="sheet-body" id="sheetBody"></div>
+  <div class="sheet-foot">
+    <button type="button" class="limpiar" id="sheetClear">Limpiar</button>
+    <button type="button" class="aplicar" id="sheetApply">Mostrar 0 vehículos</button>
+  </div>
+</div>
+
+<script src="inventario.js"></script>
+<script>
+(function(){
+  'use strict';
+  var $=function(s,c){return (c||document).querySelector(s)}, $$=function(s,c){return [].slice.call((c||document).querySelectorAll(s))};
+  var fmt=function(n){return '$'+n.toLocaleString('en-US')};
+  var fmtKm=function(n){return n.toLocaleString('en-US')+' km'};
+  var DEPTO_ORDER=['San Salvador','La Libertad','Santa Ana','San Miguel','Sonsonate','La Paz','Usulután','Ahuachapán','San Vicente','Cuscatlán','La Unión','Chalatenango','Morazán','Cabañas'];
+  var CATS=['SUV','Pickup','Sedán','Hatchback','Coupé','Moto'];
+  var COMBS=['Gasolina','Diésel','Híbrido'];
+  var TRANS=['Automática','Mecánica'];
+  var PMAX=45000, YMIN=2013, YMAX=2026, KMAX=260000;
+  var MARCAS=window.invMarcas().map(function(m){return m.marca;});
+
+  var state={q:'',tipo:[],origen:[],cats:[],deptos:[],marcas:[],comb:[],trans:[],
+    min:0,max:PMAX,yearMin:YMIN,yearMax:YMAX,kmMax:KMAX,verificado:false,inspeccionado:false,sort:'recientes'};
+
+  (function(){
+    var p=new URLSearchParams(location.search);
+    if(p.get('q')) state.q=p.get('q');
+    if(p.get('tab')==='nuevo') state.tipo=['nuevo'];
+    if(p.get('tab')==='usado') state.tipo=['usado'];
+    if(p.get('origen')) state.origen=p.get('origen').split(',');
+    if(p.get('depto')) state.deptos=p.get('depto').split(',');
+    if(p.get('cat')) state.cats=p.get('cat').split(',');
+    if(p.get('marca')) state.marcas=p.get('marca').split(',');
+    var pr=p.get('precio');
+    if(pr){ var m=pr.split('-'); if(m[0])state.min=+m[0]; if(m[1])state.max=+m[1]; }
+  })();
+
+  /* ---------- construir sidebar ---------- */
+  function chk(name,val,lbl){
+    return '<label class="fopt"><input type="checkbox" name="'+name+'" value="'+val+'"><span class="cbox"><svg class="ic" viewBox="0 0 24 24"><path d="M5 13l4 4 10-10"/></svg></span>'+lbl+'<span class="n" data-n="'+name+':'+val+'"></span></label>';
+  }
+  function rangeHTML(kind,lo,hi,step){
+    return '<div class="range-wrap" data-range="'+kind+'">'+
+      '<div class="range-track"></div><div class="range-fill" data-fill></div>'+
+      '<input type="range" aria-label="Mínimo" data-lo min="'+lo+'" max="'+hi+'" step="'+step+'" value="'+lo+'">'+
+      '<input type="range" aria-label="Máximo" data-hi min="'+lo+'" max="'+hi+'" step="'+step+'" value="'+hi+'">'+
+      '</div><p class="range-lbl" data-rangelbl="'+kind+'"></p>';
+  }
+  function kmHTML(){
+    return '<div class="range-wrap" data-range="km">'+
+      '<div class="range-track"></div><div class="range-fill" data-fill style="left:0"></div>'+
+      '<input type="range" aria-label="Kilometraje máximo" data-hi min="0" max="'+KMAX+'" step="5000" value="'+KMAX+'">'+
+      '</div><p class="range-lbl" data-rangelbl="km"></p>';
+  }
+  var sidebar=$('#filtersSrc');
+  sidebar.innerHTML=
+    '<div class="fgroup"><h3>Marca</h3>'+
+      MARCAS.slice(0,6).map(function(m){return chk('marca',m,m);}).join('')+
+      '<div data-extra hidden>'+MARCAS.slice(6).map(function(m){return chk('marca',m,m);}).join('')+'</div>'+
+      '<button type="button" class="vermas" data-vermas>Ver todas ⌄</button></div>'+
+    '<div class="fgroup"><h3>Precio</h3>'+rangeHTML('precio',0,PMAX,500)+'</div>'+
+    '<div class="fgroup"><h3>Año</h3>'+rangeHTML('anio',YMIN,YMAX,1)+'</div>'+
+    '<div class="fgroup"><h3>Kilometraje</h3>'+kmHTML()+'</div>'+
+    '<div class="fgroup"><h3>Condición</h3>'+chk('tipo','usado','Usado')+chk('tipo','nuevo','Nuevo')+'</div>'+
+    '<div class="fgroup"><h3>Origen</h3>'+chk('origen','importado','Importado')+chk('origen','agencia','De agencia')+'</div>'+
+    '<div class="fgroup"><h3>Categoría</h3>'+CATS.map(function(c){return chk('cat',c,c);}).join('')+'</div>'+
+    '<div class="fgroup"><h3>Ubicación</h3>'+
+      DEPTO_ORDER.slice(0,5).map(function(d){return chk('depto',d,d);}).join('')+
+      '<div data-extra hidden>'+DEPTO_ORDER.slice(5).map(function(d){return chk('depto',d,d);}).join('')+'</div>'+
+      '<button type="button" class="vermas" data-vermas>Ver todos ⌄</button></div>'+
+    '<div class="fgroup"><h3>Combustible</h3>'+COMBS.map(function(c){return chk('comb',c,c);}).join('')+'</div>'+
+    '<div class="fgroup"><h3>Transmisión</h3>'+TRANS.map(function(t){return chk('trans',t,t);}).join('')+'</div>'+
+    '<div class="fgroup"><h3>Características</h3>'+chk('feat','verificado','Verificado')+chk('feat','inspeccionado','Inspeccionado')+'</div>';
+
+  $('#sheetBody').innerHTML=sidebar.innerHTML;
+
+  /* ---------- sync ---------- */
+  var KEY={cat:'cats',depto:'deptos',marca:'marcas',tipo:'tipo',origen:'origen',comb:'comb',trans:'trans'};
+  function syncInputs(){
+    Object.keys(KEY).forEach(function(name){
+      $$('input[name="'+name+'"]').forEach(function(inp){ inp.checked=state[KEY[name]].indexOf(inp.value)>=0; });
+    });
+    $$('input[name="feat"]').forEach(function(inp){ inp.checked=!!state[inp.value]; });
+    $$('.range-wrap').forEach(function(w){
+      var kind=w.getAttribute('data-range'), lo=$('[data-lo]',w), hi=$('[data-hi]',w);
+      if(kind==='precio'){ lo.value=state.min; hi.value=state.max; }
+      else if(kind==='anio'){ lo.value=state.yearMin; hi.value=state.yearMax; }
+      else if(kind==='km'){ hi.value=state.kmMax; }
+      paintRange(w);
+    });
+    $$('[data-rangelbl]').forEach(function(l){
+      var kind=l.getAttribute('data-rangelbl');
+      if(kind==='precio') l.textContent=fmt(state.min)+' – '+fmt(state.max);
+      else if(kind==='anio') l.textContent=state.yearMin+' – '+state.yearMax;
+      else if(kind==='km') l.textContent=state.kmMax>=KMAX?'Cualquier kilometraje':'Hasta '+fmtKm(state.kmMax);
+    });
+    $('#hq').value=state.q;
+    $('#hqClear').classList.toggle('show',!!state.q);
+    $('#sort').value=state.sort;
+  }
+  function paintRange(w){
+    var min=+($('[data-hi]',w).min||0), max=+$('[data-hi]',w).max;
+    var lo=$('[data-lo]',w)?+$('[data-lo]',w).value:min, hi=+$('[data-hi]',w).value;
+    var f=$('[data-fill]',w), span=max-min;
+    f.style.left=((lo-min)/span*100)+'%';
+    f.style.right=(100-(hi-min)/span*100)+'%';
+  }
+
+  document.addEventListener('change',function(e){
+    var t=e.target;
+    if(t.name==='feat'){ state[t.value]=t.checked; apply(); return; }
+    if(KEY[t.name]){
+      var key=KEY[t.name], set=state[key].slice();
+      if(t.checked){ if(set.indexOf(t.value)<0) set.push(t.value); }
+      else set=set.filter(function(v){return v!==t.value;});
+      state[key]=set;
+      apply();
+    }
+  });
+  document.addEventListener('input',function(e){
+    var t=e.target;
+    if(t.type!=='range') return;
+    var w=t.closest('.range-wrap'), kind=w.getAttribute('data-range');
+    var loI=$('[data-lo]',w), hiI=$('[data-hi]',w);
+    if(kind==='km'){ state.kmMax=+hiI.value; }
+    else{
+      var lo=Math.min(+loI.value,+hiI.value), hi=Math.max(+loI.value,+hiI.value);
+      if(kind==='precio'){ state.min=lo; state.max=hi; }
+      else { state.yearMin=lo; state.yearMax=hi; }
+    }
+    apply();
+  });
+
+  $('#sort').addEventListener('change',function(){ state.sort=this.value; apply(); });
+  var hq=$('#hq'), hqT;
+  hq.addEventListener('input',function(){ clearTimeout(hqT); hqT=setTimeout(function(){ state.q=hq.value; apply(); },200); });
+  hq.addEventListener('keydown',function(e){ if(e.key==='Enter'){ state.q=hq.value; apply(); hq.blur(); } });
+  $('#hqClear').addEventListener('click',function(){ state.q=''; apply(); });
+
+  /* ---------- filtrado + render ---------- */
+  function fdef(){
+    return {q:state.q,tipo:state.tipo,origen:state.origen,cats:state.cats,deptos:state.deptos,
+      marcas:state.marcas,comb:state.comb,trans:state.trans,
+      min:state.min>0?state.min:null,max:state.max<PMAX?state.max:null,
+      yearMin:state.yearMin>YMIN?state.yearMin:null,yearMax:state.yearMax<YMAX?state.yearMax:null,
+      kmMax:state.kmMax<KMAX?state.kmMax:null,
+      verificado:state.verificado,inspeccionado:state.inspeccionado};
+  }
+  function sorted(list){
+    var l=list.slice();
+    if(state.sort==='precio-asc') l.sort(function(a,b){return a.precio-b.precio;});
+    else if(state.sort==='precio-desc') l.sort(function(a,b){return b.precio-a.precio;});
+    else if(state.sort==='km') l.sort(function(a,b){return a.km-b.km;});
+    else if(state.sort==='anio') l.sort(function(a,b){return b.year-a.year;});
+    else l.sort(function(a,b){return b.year-a.year||a.km-b.km;});
+    return l;
+  }
+  function card(v){
+    var foto=/^car_/.test(v.img);
+    return '<article class="vcard">'+
+      '<div class="vimg">'+(v.tipo==='nuevo'?'<span class="vbadge">Nuevo</span>':'')+
+      '<img src="'+v.img+'" alt="" loading="lazy"'+(foto?' class="foto"':'')+'></div>'+
+      '<div class="vbody"><h2 class="vt">'+v.marca+' '+v.modelo+'</h2>'+
+      '<p class="vm">'+v.year+' · '+(v.km===0?'0 km':fmtKm(v.km))+' · '+v.depto+'</p>'+
+      '<div class="vfoot"><p class="vp">'+fmt(v.precio)+'</p><div class="vtags">'+
+      (v.verificado?'<span class="vtag"><svg class="ic" viewBox="0 0 24 24"><path d="M5 13l4 4 10-10"/></svg>Verificado</span>':'')+
+      '</div></div></div></article>';
+  }
+  function activeCount(){
+    return state.tipo.length+state.origen.length+state.cats.length+state.deptos.length+state.marcas.length+state.comb.length+state.trans.length+
+      ((state.min>0||state.max<PMAX)?1:0)+((state.yearMin>YMIN||state.yearMax<YMAX)?1:0)+(state.kmMax<KMAX?1:0)+
+      (state.verificado?1:0)+(state.inspeccionado?1:0);
+  }
+  function chipDefs(){
+    var out=[];
+    var rm=function(key,v){ return function(){ state[key]=state[key].filter(function(x){return x!==v;}); }; };
+    state.marcas.forEach(function(v){ out.push({lbl:v,fn:rm('marcas',v)}); });
+    state.tipo.forEach(function(v){ out.push({lbl:v==='usado'?'Usado':'Nuevo',fn:rm('tipo',v)}); });
+    state.origen.forEach(function(v){ out.push({lbl:v==='importado'?'Importado':'De agencia',fn:rm('origen',v)}); });
+    state.cats.forEach(function(v){ out.push({lbl:v,fn:rm('cats',v)}); });
+    state.deptos.forEach(function(v){ out.push({lbl:v,fn:rm('deptos',v)}); });
+    state.comb.forEach(function(v){ out.push({lbl:v,fn:rm('comb',v)}); });
+    state.trans.forEach(function(v){ out.push({lbl:v,fn:rm('trans',v)}); });
+    if(state.min>0||state.max<PMAX) out.push({lbl:fmt(state.min)+' – '+fmt(state.max),fn:function(){state.min=0;state.max=PMAX;}});
+    if(state.yearMin>YMIN||state.yearMax<YMAX) out.push({lbl:state.yearMin+' – '+state.yearMax,fn:function(){state.yearMin=YMIN;state.yearMax=YMAX;}});
+    if(state.kmMax<KMAX) out.push({lbl:'≤ '+fmtKm(state.kmMax),fn:function(){state.kmMax=KMAX;}});
+    if(state.verificado) out.push({lbl:'Verificado',fn:function(){state.verificado=false;}});
+    if(state.inspeccionado) out.push({lbl:'Inspeccionado',fn:function(){state.inspeccionado=false;}});
+    if(state.q) out.push({lbl:'“'+state.q+'”',fn:function(){state.q='';}});
+    return out;
+  }
+  function renderChips(){
+    var defs=chipDefs();
+    var desk=$('#chips'); desk.innerHTML='';
+    var mbar=$('#mbar');
+    $$('.chip,.chip-clear',mbar).forEach(function(el){el.remove();});
+    defs.forEach(function(d){
+      [desk,mbar].forEach(function(box){
+        var b=document.createElement('button');
+        b.type='button'; b.className='chip';
+        b.innerHTML=d.lbl+' <svg class="ic" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+        b.addEventListener('click',function(){ d.fn(); apply(); });
+        box.appendChild(b);
+      });
+    });
+    if(defs.length){
+      var c=document.createElement('button');
+      c.type='button'; c.className='chip-clear'; c.textContent='Limpiar todo';
+      c.addEventListener('click',clearAll);
+      desk.appendChild(c);
+    }
+  }
+  function clearAll(){
+    state.tipo=[];state.origen=[];state.cats=[];state.deptos=[];state.marcas=[];state.comb=[];state.trans=[];
+    state.min=0;state.max=PMAX;state.yearMin=YMIN;state.yearMax=YMAX;state.kmMax=KMAX;
+    state.verificado=false;state.inspeccionado=false;state.q='';
+    apply();
+  }
+  function renderCounts(){
+    $$('[data-n]').forEach(function(el){
+      var parts=el.getAttribute('data-n').split(':'), g=parts[0], val=parts[1];
+      var f=fdef();
+      if(g==='tipo') f.tipo=[val];
+      else if(g==='origen') f.origen=[val];
+      else if(g==='cat') f.cats=[val];
+      else if(g==='depto') f.deptos=[val];
+      else if(g==='marca') f.marcas=[val];
+      else if(g==='comb') f.comb=[val];
+      else if(g==='trans') f.trans=[val];
+      else if(g==='feat'){ f[val]=true; }
+      el.textContent=window.invFiltrar(f).length;
+    });
+  }
+  function apply(){
+    var list=sorted(window.invFiltrar(fdef()));
+    $('#grid').innerHTML=list.map(card).join('');
+    $('#empty').hidden=list.length>0;
+    $('#rcount').innerHTML='<b>'+list.length+' vehículo'+(list.length===1?'':'s')+'</b>'+(state.q?' · “'+state.q+'”':'');
+    var n=activeCount(), badge=$('#fbadge');
+    badge.hidden=n===0; badge.textContent=n;
+    $('#sheetApply').textContent='Mostrar '+list.length+' vehículo'+(list.length===1?'':'s');
+    renderChips();
+    renderCounts();
+    syncInputs();
+    var p=new URLSearchParams();
+    if(state.q)p.set('q',state.q);
+    if(state.tipo.length===1)p.set('tab',state.tipo[0]);
+    if(state.origen.length)p.set('origen',state.origen.join(','));
+    if(state.deptos.length)p.set('depto',state.deptos.join(','));
+    if(state.cats.length)p.set('cat',state.cats.join(','));
+    if(state.marcas.length)p.set('marca',state.marcas.join(','));
+    if(state.min>0||state.max<PMAX)p.set('precio',state.min+'-'+state.max);
+    history.replaceState(null,'',p.toString()?'?'+p.toString():location.pathname);
+  }
+
+  document.addEventListener('click',function(e){
+    if(e.target.matches('[data-vermas]')){
+      var scope=e.target.closest('.fgroup');
+      $('[data-extra]',scope).hidden=false;
+      e.target.remove();
+    }
+  });
+
+  /* ---------- bottom sheet ---------- */
+  var sheet=$('#sheet'), back=$('#sheetBack'), lastFocus=null;
+  function openSheet(){ lastFocus=document.activeElement; sheet.classList.add('open'); back.classList.add('open'); document.body.classList.add('sheet-lock'); sheet.focus(); }
+  function closeSheet(){ sheet.classList.remove('open'); back.classList.remove('open'); document.body.classList.remove('sheet-lock'); if(lastFocus)lastFocus.focus(); }
+  $('#openSheet').addEventListener('click',openSheet);
+  $('#closeSheet').addEventListener('click',closeSheet);
+  $('#sheetApply').addEventListener('click',closeSheet);
+  $('#sheetClear').addEventListener('click',clearAll);
+  back.addEventListener('click',closeSheet);
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&sheet.classList.contains('open')) closeSheet(); });
+
+  apply();
+})();
+</script>
+</body>
+</html>

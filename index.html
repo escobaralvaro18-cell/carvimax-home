@@ -138,6 +138,8 @@
   #searchCount{display:inline-block;transition:opacity .13s var(--ease),filter .13s var(--ease)}
   .cta.swapping #searchCount{opacity:.3;filter:blur(2px)}
   .field{position:relative;display:flex;align-items:center;gap:9px;border:1px solid var(--line);border-radius:12px;padding:0 13px;height:52px;background:var(--white);transition:border-color .25s var(--ease),box-shadow .25s var(--ease)}
+  .panel .field{margin-bottom:12px}
+  .field input::-webkit-search-cancel-button{-webkit-appearance:none}
   .field:focus-within{border-color:var(--brand);box-shadow:0 0 0 4px oklch(0.55 0.22 293 / 0.14)}
   .field>.ic{width:19px;height:19px;color:var(--ink-3)}
   .field input{border:none;outline:none;background:none;font-family:inherit;font-size:15px;color:var(--ink);width:100%;height:100%}
@@ -406,12 +408,10 @@
     .tab.on{background:var(--white);color:var(--ink);box-shadow:0 2px 8px -2px oklch(0.24 0.07 286 / 0.25)}
     .tab.on::after{display:none}
 
-    .flabel{display:block;font-family:'Lexend',sans-serif;font-weight:600;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);margin:14px 0 7px}
-    .pills{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:0}
-    .pill{border-radius:12px;padding:12px 0;text-align:center}
-    .pill.on{background:var(--brand-tint);border-color:var(--brand);color:var(--brand-strong)}
-    .two{grid-template-columns:1fr;gap:0;margin-top:0}
-    .field{margin-top:14px}
+    /* Móvil: el modal es búsqueda pura — filtros viven en resultados */
+    .search-wrap .tabs,.search-wrap .flabel,.search-wrap .pills,.search-wrap .two,.search-wrap .search .cta{display:none}
+    .search-wrap .field{margin:2px 0 0}
+    .search-wrap .typeahead-pop{transform:none;opacity:1;pointer-events:auto;box-shadow:none;border-color:var(--line-2);top:calc(100% + 10px)}
     .cats-wrap{margin-top:28px;padding:0 20px}
     .section{padding:40px 24px 56px}
     .conf__grid{grid-template-columns:1fr;gap:11px}
@@ -546,17 +546,17 @@
           <div class="panels" id="panelsBox">
           <!-- Panel: Usado -->
           <div class="panel" role="tabpanel" id="panel-usado" aria-labelledby="tab-usado" data-panel="usado">
+            <div class="field" id="typeahead">
+              <svg class="ic" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+              <label class="sr-only" for="q">Busca por marca o modelo</label>
+              <input id="q" type="search" enterkeyhint="search" autocorrect="off" spellcheck="false" autocomplete="off" placeholder="Busca por marca o modelo" role="combobox" aria-expanded="false" aria-controls="taPop" aria-autocomplete="list">
+              <div class="typeahead-pop" id="taPop" role="listbox" aria-label="Marcas con inventario"></div>
+            </div>
+
             <p class="flabel">Origen</p>
             <div class="pills" role="group" aria-label="Origen del vehículo">
               <button type="button" class="pill" data-count="98" data-origen="importado">Importado</button>
               <button type="button" class="pill" data-count="38" data-origen="agencia">De agencia</button>
-            </div>
-
-            <div class="field" id="typeahead">
-              <svg class="ic" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-              <label class="sr-only" for="q">Busca por marca o modelo</label>
-              <input id="q" type="text" autocomplete="off" placeholder="Busca por marca o modelo" role="combobox" aria-expanded="false" aria-controls="taPop" aria-autocomplete="list">
-              <div class="typeahead-pop" id="taPop" role="listbox" aria-label="Marcas con inventario"></div>
             </div>
 
             <div class="two">
@@ -874,6 +874,7 @@
     </div>
   </footer>
 
+  <script src="inventario.js"></script>
   <script>
   (function(){
     var ham=document.getElementById('hamburger'), menu=document.getElementById('mobileMenu');
@@ -949,32 +950,37 @@
       });
     });
 
-    /* Contador estimado, reactivo a todos los filtros (mock) */
-    var PRECIO_F={'0-5000':0.18,'5000-10000':0.32,'10000-20000':0.28,'20000-30000':0.14,'30000-':0.08};
+    /* Contador real desde el inventario */
+    function precioBucket(v){
+      if(!v) return {};
+      var m=v.split('-');
+      return {min:m[0]?+m[0]:null, max:m[1]?+m[1]:null};
+    }
     function currentCount(){
-      var n;
+      if(!window.invFiltrar) return COUNTS[curTab];
+      var f={tipo:[curTab]};
       if(curTab==='nuevo'){
-        n=COUNTS.nuevo;
-        var mk=document.getElementById('marca');
-        if(mk&&mk.value) n=Math.max(1,Math.round(n*0.3));
+        var mk=document.getElementById('marca'), md=document.getElementById('modelo');
+        if(mk&&mk.value) f.marcas=[mk.value];
+        if(md&&md.value) f.q=md.value;
       } else {
         var org=document.querySelector('[data-panel="usado"] .pill.on');
-        n=org? +org.getAttribute('data-count') : COUNTS.usado;
+        if(org) f.origen=[org.getAttribute('data-origen')];
         var pr=document.getElementById('precio');
-        if(pr&&pr.value) n=Math.round(n*(PRECIO_F[pr.value]||0.2));
+        if(pr&&pr.value){ var b=precioBucket(pr.value); f.min=b.min; f.max=b.max; }
         var dp=document.getElementById('depto');
-        if(dp&&dp.value){ n=Math.round(n*(dp.value==='San Salvador'?0.38:dp.value==='La Libertad'?0.22:0.07)); }
+        if(dp&&dp.value) f.deptos=[dp.value];
         var qv=document.getElementById('q');
-        if(qv&&qv.value.trim()) n=Math.round(n*0.25);
-        n=Math.max(n,2);
+        if(qv&&qv.value.trim()) f.q=qv.value.trim();
       }
-      return n;
+      return window.invFiltrar(f).length;
     }
     function refreshCount(){ swapCount(currentCount()); }
     ['precio','depto','marca','modelo'].forEach(function(id){
       var el=document.getElementById(id);
       if(el) el.addEventListener('change',refreshCount);
     });
+    if(searchCount&&window.invFiltrar){ searchCount.textContent=currentCount(); }
     /* Marca → Modelo dinámico (nuevos) */
     var MODELOS={
       'Toyota':['Corolla','Yaris','RAV4','Hilux','Prado','Rush'],
@@ -996,7 +1002,8 @@
       });
     }
 
-    var MAKES=[['Toyota',31],['Nissan',22],['Hyundai',14],['Kia',12],['Chevrolet',11],['Mitsubishi',9],['Honda',8],['Ford',7],['Mazda',6],['Suzuki',5]];
+    var mqM=window.matchMedia('(max-width:860px)');
+    var MAKES=window.invMarcas ? window.invMarcas().map(function(m){return [m.marca,m.n];}) : [['Toyota',29],['Hyundai',23],['Kia',17]];
     var ta=document.getElementById('typeahead'), q=document.getElementById('q'), pop=document.getElementById('taPop');
     var taActive=-1;
     function setOpen(o){
@@ -1004,31 +1011,46 @@
       q.setAttribute('aria-expanded',o?'true':'false');
       if(!o){ taActive=-1; q.removeAttribute('aria-activedescendant'); }
     }
-    function render(list){
-      var h='<div class="ta-head" aria-hidden="true">Marcas con más disponibilidad</div>';
+    function render(list,typing){
+      var h='<div class="ta-head" aria-hidden="true">'+(typing?'Coincidencias en inventario':'Marcas con más disponibilidad')+'</div>';
       list.forEach(function(m,i){ h+='<div class="ta-item" role="option" id="ta-opt-'+i+'" data-make="'+m[0]+'"><span>'+m[0]+'</span><span class="c">'+m[1]+'</span></div>'; });
       if(!list.length) h+='<div class="ta-item"><span class="c">Sin coincidencias en inventario</span></div>';
       pop.innerHTML=h; taActive=-1; q.removeAttribute('aria-activedescendant');
     }
-    function filter(v){ v=(v||'').trim().toLowerCase(); return MAKES.filter(function(m){return !v||m[0].toLowerCase().indexOf(v)>-1;}).slice(0,7); }
-    q.addEventListener('focus',function(){ render(filter(q.value)); setOpen(true); });
-    q.addEventListener('input',function(){ render(filter(q.value)); if(!ta.classList.contains('open')) setOpen(true); refreshCount(); });
+    function filter(v){
+      v=(v||'').trim();
+      if(!v) return MAKES.slice(0,7);
+      if(window.invSugerencias) return window.invSugerencias(v).map(function(s){return [s.txt,s.n];});
+      var lv=v.toLowerCase();
+      return MAKES.filter(function(m){return m[0].toLowerCase().indexOf(lv)>-1;}).slice(0,7);
+    }
+    function renderNow(){ render(filter(q.value),!!q.value.trim()); }
+    /* Elegir sugerencia: en móvil va directo a resultados; en desktop rellena el campo */
+    function pick(val){
+      if(mqM.matches){
+        window.location.href='resultados.html?q='+encodeURIComponent(val)+'&tab='+curTab;
+      } else {
+        q.value=val; setOpen(false); refreshCount();
+      }
+    }
+    q.addEventListener('focus',function(){ renderNow(); setOpen(true); });
+    q.addEventListener('input',function(){ renderNow(); if(!ta.classList.contains('open')) setOpen(true); refreshCount(); });
     q.addEventListener('keydown',function(e){
       var items=pop.querySelectorAll('.ta-item[data-make]');
-      if(e.key==='Escape'){ if(ta.classList.contains('open')){ e.stopPropagation(); } setOpen(false); return; }
+      if(e.key==='Escape'){ if(ta.classList.contains('open')&&!mqM.matches){ e.stopPropagation(); e.preventDefault(); } setOpen(false); return; }
       if(e.key==='ArrowDown'||e.key==='ArrowUp'){
-        if(!ta.classList.contains('open')){ render(filter(q.value)); setOpen(true); items=pop.querySelectorAll('.ta-item[data-make]'); }
+        if(!ta.classList.contains('open')){ renderNow(); setOpen(true); items=pop.querySelectorAll('.ta-item[data-make]'); }
         if(!items.length) return;
         e.preventDefault();
         taActive=(taActive+(e.key==='ArrowDown'?1:-1)+items.length)%items.length;
         items.forEach(function(it,i){ it.classList.toggle('active',i===taActive); });
         q.setAttribute('aria-activedescendant',items[taActive].id);
       } else if(e.key==='Enter'&&taActive>-1&&items[taActive]){
-        e.preventDefault(); q.value=items[taActive].dataset.make; setOpen(false);
+        e.preventDefault(); pick(items[taActive].dataset.make);
       }
     });
-    pop.addEventListener('mousedown',function(e){ var it=e.target.closest('.ta-item'); if(!it||!it.dataset.make) return; e.preventDefault(); q.value=it.dataset.make; setOpen(false); refreshCount(); });
-    document.addEventListener('click',function(e){ if(!ta.contains(e.target)) setOpen(false); });
+    pop.addEventListener('mousedown',function(e){ var it=e.target.closest('.ta-item'); if(!it||!it.dataset.make) return; e.preventDefault(); pick(it.dataset.make); });
+    document.addEventListener('click',function(e){ if(!ta.contains(e.target)&&!mqM.matches) setOpen(false); });
 
     /* Modal de búsqueda (móvil) */
     var sTrig=document.getElementById('searchTrigger'), sWrap=document.getElementById('searchWrap'), sClose=document.getElementById('searchClose');
@@ -1060,7 +1082,13 @@
       document.documentElement.classList.add('no-scroll');
       sWrap.setAttribute('aria-modal','true');
       if(searchFormEl) searchFormEl.classList.add('is-visible');
-      sWrap.focus();
+      if(mqM.matches){
+        /* móvil: teclado inmediato + sugerencias visibles */
+        q.focus({preventScroll:true});
+        renderNow(); setOpen(true);
+      } else {
+        sWrap.focus();
+      }
     }
     function closeSearch(){
       sWrap.classList.remove('open');
@@ -1090,11 +1118,11 @@
       });
     }
 
-    /* Buscador → URL real de /comprar */
+    /* Buscador → página de resultados */
     document.getElementById('searchForm').addEventListener('submit',function(e){
       e.preventDefault();
       var p=new URLSearchParams();
-      p.set('condicion',curTab);
+      p.set('tab',curTab);
       if(curTab==='usado'){
         var org=document.querySelector('[data-panel="usado"] .pill.on');
         if(org) p.set('origen',org.getAttribute('data-origen'));
@@ -1104,9 +1132,9 @@
       } else {
         var mk=document.getElementById('marca'), md=document.getElementById('modelo');
         if(mk.value) p.set('marca',mk.value);
-        if(md.value) p.set('modelo',md.value);
+        if(md.value) p.set('q',md.value);
       }
-      window.location.href='https://www.carvimax.com/comprar?'+p.toString();
+      window.location.href='resultados.html?'+p.toString();
     });
 
     /* Banner financiamiento: entrada */

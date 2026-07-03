@@ -74,12 +74,19 @@
       else if(/RAV4|CR-V|Tucson|Sportage|Outlander|Kicks/.test(m.modelo)&&rand()<0.3) comb='Híbrido';
       else comb=rand()<0.92?'Gasolina':'Diésel';
       var trans = m.cat==='Moto' ? 'Mecánica' : (rand()<0.72?'Automática':'Mecánica');
+      /* Todo vehículo se verifica antes de publicarse: verificado = true siempre.
+         'observacion' = tiene un detalle documental (tarjeta vencida, esquela, etc.);
+         el pill verde pasa a estado ámbar informativo. Autos nuevos casi nunca tienen. */
+      var observacion = nuevo ? (rand()<0.03) : (rand()<0.17);
+      var destacado = rand()<0.14; /* anuncios pagados / resaltados */
+      var aliado = rand()<0.22 ? 'lider' : null; /* alianza con Líder Carros (auto lote) */
       items.push({
         id:id++, marca:m.marca, modelo:m.modelo, cat:m.cat, year:year, km:km,
         precio:precio, depto:DEPTOS[Math.floor(rand()*DEPTOS.length)],
         origen:origen, tipo:nuevo?'nuevo':'usado',
         comb:comb, trans:trans,
-        verificado:rand()<0.82, inspeccionado:rand()<0.45,
+        verificado:true, observacion:observacion, destacado:destacado, aliado:aliado,
+        inspeccionado:rand()<0.45,
         img:m.img||CAT_IMG[m.cat]
       });
     }
@@ -104,6 +111,9 @@
       if(f.kmMax!=null&&v.km>f.kmMax) return false;
       if(f.verificado&&!v.verificado) return false;
       if(f.inspeccionado&&!v.inspeccionado) return false;
+      if(f.destacado&&!v.destacado) return false;
+      if(f.observacion&&!v.observacion) return false;
+      if(f.aliado&&v.aliado!==f.aliado) return false;
       if(q){
         var s=(v.marca+' '+v.modelo).toLowerCase();
         if(s.indexOf(q)<0) return false;

@@ -275,8 +275,7 @@
   }
   .dest__track{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;padding:12px 6px 38px;margin:0 -6px;scrollbar-width:none}
   .dest__track::-webkit-scrollbar{display:none}
-  .vcard{flex:0 0 300px;scroll-snap-align:start;position:relative;background:var(--white);border:1px solid var(--line);border-radius:var(--r-card);overflow:hidden;
-    box-shadow:var(--shadow-card);opacity:0;
+  .vcard{flex:0 0 300px;scroll-snap-align:start;position:relative;background:var(--white);border:1px solid var(--line-2);border-radius:var(--r-card);overflow:hidden;display:flex;flex-direction:column;opacity:0;
     transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
   @keyframes vcardIn{from{opacity:0;translate:0 16px}to{opacity:1;translate:0 0}}
   .dest__track.is-in .vcard{animation:vcardIn .55s var(--ease) both}
@@ -284,26 +283,34 @@
   .dest__track.is-in .vcard:nth-child(3){animation-delay:140ms}
   .dest__track.is-in .vcard:nth-child(4){animation-delay:210ms}
   .dest__track.is-in .vcard:nth-child(5){animation-delay:280ms}
-  .vcard__img{position:relative;aspect-ratio:16/10;overflow:hidden;background:var(--card)}
-  .vcard__img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s var(--ease)}
-  .vbadge{position:absolute;top:10px;left:10px;display:inline-flex;align-items:center;gap:5px;font-family:'Lexend',sans-serif;font-weight:600;font-size:11px;padding:4px 9px;border-radius:999px;
-    background:#1F7A4E;color:#F7FDF9;box-shadow:0 4px 12px -6px oklch(0.5 0.14 150 / 0.7)}
-  .vbadge .ic{width:12px;height:12px;stroke-width:2.4;stroke:currentColor;fill:none}
-  .vheart{position:absolute;top:9px;right:9px;z-index:2;width:32px;height:32px;border-radius:50%;border:none;cursor:pointer;
-    background:rgba(255,255,255,0.86);background:color-mix(in oklch, var(--white) 86%, transparent);backdrop-filter:blur(4px);color:var(--brand);display:flex;align-items:center;justify-content:center;
-    transition:transform .16s var(--ease),background .2s var(--ease)}
-  .vheart .ic{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;transition:fill .2s var(--ease)}
-  .vheart.on .ic{fill:var(--brand)}
-  .vcard__body{padding:13px 15px 15px}
-  .vcard__link::after{content:"";position:absolute;inset:0;z-index:1}
-  .vcard__title{font-family:'Lexend',sans-serif;font-weight:600;font-size:15px;letter-spacing:-0.01em;color:var(--ink);margin:0}
-  .vcard__price{font-family:'Lexend',sans-serif;font-weight:700;font-size:17px;color:var(--brand);margin-top:2px}
-  .vcard__meta{font-size:12.5px;color:var(--ink-3);margin-top:4px}
+  /* Card IDÉNTICA a la de resultados (sin pill de destacado) */
+  .vcard__link{position:absolute;inset:0;z-index:2}
+  .vimg{aspect-ratio:16/10;background:linear-gradient(160deg,#EDEAF6,#E2DCEF);display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+  .vimg img{width:78%;height:auto;object-fit:contain}
+  .vimg img.foto{width:100%;height:100%;object-fit:cover}
+  .vbody{padding:12px 15px 13px;display:flex;flex-direction:column;flex:1}
+  .veb{font-size:12px;font-weight:600;color:var(--ink-2);margin:0 0 2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .veb .cnd.nuevo{color:var(--brand-strong)}
+  .vt{font-family:'Lexend',sans-serif;font-weight:600;font-size:15px;color:var(--ink);margin:0;letter-spacing:-0.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .vspecs{font-size:12.5px;color:var(--ink-2);margin:6px 0 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .vfoot{margin-top:auto;padding-top:11px;border-top:1px solid var(--line-2)}
+  .vpricerow{display:flex;align-items:flex-end;justify-content:space-between;gap:8px}
+  .vp{font-family:'Lexend',sans-serif;font-weight:700;font-size:22px;letter-spacing:-0.02em;color:var(--ink);margin:0;line-height:1}
+  .vstate{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;line-height:1;white-space:nowrap;flex:none;padding-bottom:2px}
+  .vstate svg{width:13px;height:13px;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;fill:none}
+  .vstate.ok{color:#1F7A4E}
+  .vstate.obs{color:#A5680B}
+  .vgeo{display:flex;align-items:center;gap:5px;margin-top:9px;font-size:12.5px;color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   @media (hover:hover) and (pointer:fine){
-    .vcard:hover{transform:translateY(-4px);box-shadow:0 28px 52px -26px oklch(0.2 0.08 286 / 0.5)}
-    .vcard:hover .vcard__img img{transform:scale(1.06)}
-    .vheart:hover{background:var(--white)}
+    .vcard:hover{transform:translateY(-3px);box-shadow:var(--shadow-card)}
   }
+
+  /* ===== Aliado · Líder Carros ===== */
+  .ally-wrap{padding-top:24px}
+  .ally__head{display:flex;align-items:center;gap:12px}
+  .ally__emblem{width:46px;height:46px;border-radius:50%;object-fit:contain;flex:none;display:block}
+  /* Título homologado a Destacados (.dest__title) */
+  .ally__title{font-family:'Lexend',sans-serif;font-weight:600;font-size:clamp(24px,3vw,32px);line-height:1.1;letter-spacing:-0.02em;color:var(--ink);margin:0}
 
   /* ===== Vende tu carro ===== */
   .sell-wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px 84px}
@@ -495,14 +502,14 @@
         <span class="hdr-search__txt">Busca por marca o modelo</span>
       </button>
       <nav class="nav__links" aria-label="Principal">
-        <a href="https://www.carvimax.com/comprar">Comprar</a>
+        <a href="resultados.html">Comprar</a>
         <a href="#">Financiamiento</a>
         <a href="#">Seguros</a>
         <a href="#">Sobre nosotros</a>
       </nav>
       <div class="nav__actions">
         <a href="#" class="btn btn--ghost">Acceder</a>
-        <a href="https://www.carvimax.com/sell" class="btn btn--primary">Vender</a>
+        <a href="#" class="btn btn--primary">Vender</a>
         <button class="hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileMenu">
           <svg class="ic" viewBox="0 0 24 24" width="22" height="22"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
         </button>
@@ -510,8 +517,8 @@
     </div>
     <div class="mobile-menu" id="mobileMenu">
       <a href="#">Acceder</a>
-      <a href="https://www.carvimax.com/sell">Vender mi vehículo</a>
-      <a href="https://www.carvimax.com/comprar">Comprar</a>
+      <a href="#">Vender mi vehículo</a>
+      <a href="resultados.html">Comprar</a>
       <a href="#">Financiamiento</a>
       <a href="#">Seguros</a>
       <a href="#">Sobre nosotros</a>
@@ -646,27 +653,27 @@
         <h2 class="cats__title" id="cats-title">Explora por categorías</h2>
       </div>
       <div class="cats__grid">
-      <a class="cat" href="https://www.carvimax.com/comprar?tipo=moto" aria-label="Explorar Motos">
+      <a class="cat" href="resultados.html?cat=Moto" aria-label="Explorar Motos">
         <img src="cat_moto.webp" alt="" width="472" height="232" loading="lazy">
         <span>Moto</span>
       </a>
-      <a class="cat" href="https://www.carvimax.com/comprar?tipo=suv" aria-label="Explorar SUV">
+      <a class="cat" href="resultados.html?cat=SUV" aria-label="Explorar SUV">
         <img src="cat_suv.webp" alt="" width="472" height="232" loading="lazy">
         <span>SUV</span>
       </a>
-      <a class="cat" href="https://www.carvimax.com/comprar?tipo=pickup" aria-label="Explorar Pickup">
+      <a class="cat" href="resultados.html?cat=Pickup" aria-label="Explorar Pickup">
         <img src="cat_pickup.webp" alt="" width="472" height="232" loading="lazy">
         <span>Pickup</span>
       </a>
-      <a class="cat" href="https://www.carvimax.com/comprar?tipo=sedan" aria-label="Explorar Sedán">
+      <a class="cat" href="resultados.html?cat=Sed%C3%A1n" aria-label="Explorar Sedán">
         <img src="cat_sedan.webp" alt="" width="472" height="232" loading="lazy">
         <span>Sedán</span>
       </a>
-      <a class="cat" href="https://www.carvimax.com/comprar?tipo=hatchback" aria-label="Explorar Hatchback">
+      <a class="cat" href="resultados.html?cat=Hatchback" aria-label="Explorar Hatchback">
         <img src="cat_hatchback.webp" alt="" width="472" height="232" loading="lazy">
         <span>Hatchback</span>
       </a>
-      <a class="cat" href="https://www.carvimax.com/comprar?tipo=coupe" aria-label="Explorar Coupé">
+      <a class="cat" href="resultados.html?cat=Coup%C3%A9" aria-label="Explorar Coupé">
         <img src="cat_coupe.webp" alt="" width="472" height="232" loading="lazy">
         <span>Coupé</span>
       </a>
@@ -697,7 +704,7 @@
     <div class="dest__head">
       <h2 class="dest__title" id="dest-title">Destacados</h2>
       <div class="dest__nav">
-        <a class="dest__all" href="https://www.carvimax.com/comprar">Ver todos
+        <a class="dest__all" href="resultados.html">Ver todos
           <svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
         <div class="dest__arrows">
@@ -709,57 +716,81 @@
 
     <div class="dest__track" id="destTrack">
       <article class="vcard">
-        <div class="vcard__img">
-          <img src="car_rav4.webp" alt="Toyota RAV4 XLE" loading="lazy">
-          <span class="vbadge" title="Identidad del vendedor, documentos e historial verificados por Carvimax"><svg class="ic" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Verificado</span>
-          <button type="button" class="vheart" aria-label="Guardar vehículo" aria-pressed="false"><svg class="ic" viewBox="0 0 24 24"><path d="M12 21C5 14 3 11 3 7.5A4.5 4.5 0 0 1 12 6a4.5 4.5 0 0 1 9 1.5C21 11 19 14 12 21z"/></svg></button>
-        </div>
-        <div class="vcard__body">
-          <a class="vcard__link" href="https://www.carvimax.com/vehicle/1"><h3 class="vcard__title">Toyota RAV4 XLE</h3></a>
-          <div class="vcard__price">$24,900</div>
-          <div class="vcard__meta">2022 · 38,000 km · San Salvador</div>
-        </div>
-      </article>
-
-      <article class="vcard">
-        <div class="vcard__img">
-          <img src="car_ranger.webp" alt="Ford Ranger XL" loading="lazy">
-          <span class="vbadge" title="Identidad del vendedor, documentos e historial verificados por Carvimax"><svg class="ic" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Verificado</span>
-          <button type="button" class="vheart" aria-label="Guardar vehículo" aria-pressed="false"><svg class="ic" viewBox="0 0 24 24"><path d="M12 21C5 14 3 11 3 7.5A4.5 4.5 0 0 1 12 6a4.5 4.5 0 0 1 9 1.5C21 11 19 14 12 21z"/></svg></button>
-        </div>
-        <div class="vcard__body">
-          <a class="vcard__link" href="https://www.carvimax.com/vehicle/2"><h3 class="vcard__title">Ford Ranger XL</h3></a>
-          <div class="vcard__price">$18,500</div>
-          <div class="vcard__meta">2019 · 54,000 km · La Libertad</div>
+        <a class="vcard__link" href="resultados.html" aria-label="Ver Toyota RAV4 XLE"></a>
+        <div class="vimg"><img class="foto" src="car_rav4.webp" alt="Toyota RAV4 XLE" loading="lazy"></div>
+        <div class="vbody">
+          <p class="veb"><span class="cnd">Usado</span> · De agencia</p>
+          <h3 class="vt">Toyota RAV4 XLE</h3>
+          <p class="vspecs">2022 · 38,000 km · Automática · Híbrido</p>
+          <div class="vfoot">
+            <div class="vpricerow"><p class="vp">$24,900</p><span class="vstate ok"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-10"/></svg>Verificado</span></div>
+            <div class="vgeo">San Salvador</div>
+          </div>
         </div>
       </article>
 
       <article class="vcard">
-        <div class="vcard__img">
-          <img src="car_rio.webp" alt="Kia Rio LX" loading="lazy">
-          <span class="vbadge" title="Identidad del vendedor, documentos e historial verificados por Carvimax"><svg class="ic" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Verificado</span>
-          <button type="button" class="vheart" aria-label="Guardar vehículo" aria-pressed="false"><svg class="ic" viewBox="0 0 24 24"><path d="M12 21C5 14 3 11 3 7.5A4.5 4.5 0 0 1 12 6a4.5 4.5 0 0 1 9 1.5C21 11 19 14 12 21z"/></svg></button>
-        </div>
-        <div class="vcard__body">
-          <a class="vcard__link" href="https://www.carvimax.com/vehicle/3"><h3 class="vcard__title">Kia Rio LX</h3></a>
-          <div class="vcard__price">$9,700</div>
-          <div class="vcard__meta">2022 · 74,000 km · Santa Ana</div>
+        <a class="vcard__link" href="resultados.html" aria-label="Ver Ford Ranger XL"></a>
+        <div class="vimg"><img class="foto" src="car_ranger.webp" alt="Ford Ranger XL" loading="lazy"></div>
+        <div class="vbody">
+          <p class="veb"><span class="cnd">Usado</span> · Importado</p>
+          <h3 class="vt">Ford Ranger XL</h3>
+          <p class="vspecs">2019 · 54,000 km · Mecánica · Diésel</p>
+          <div class="vfoot">
+            <div class="vpricerow"><p class="vp">$18,500</p><span class="vstate ok"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-10"/></svg>Verificado</span></div>
+            <div class="vgeo">La Libertad</div>
+          </div>
         </div>
       </article>
 
       <article class="vcard">
-        <div class="vcard__img">
-          <img src="car_tucson.webp" alt="Hyundai Tucson" loading="lazy">
-          <span class="vbadge" title="Identidad del vendedor, documentos e historial verificados por Carvimax"><svg class="ic" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Verificado</span>
-          <button type="button" class="vheart" aria-label="Guardar vehículo" aria-pressed="false"><svg class="ic" viewBox="0 0 24 24"><path d="M12 21C5 14 3 11 3 7.5A4.5 4.5 0 0 1 12 6a4.5 4.5 0 0 1 9 1.5C21 11 19 14 12 21z"/></svg></button>
+        <a class="vcard__link" href="resultados.html" aria-label="Ver Kia Rio LX"></a>
+        <div class="vimg"><img class="foto" src="car_rio.webp" alt="Kia Rio LX" loading="lazy"></div>
+        <div class="vbody">
+          <p class="veb"><span class="cnd">Usado</span> · Importado</p>
+          <h3 class="vt">Kia Rio LX</h3>
+          <p class="vspecs">2022 · 74,000 km · Automática · Gasolina</p>
+          <div class="vfoot">
+            <div class="vpricerow"><p class="vp">$9,700</p><span class="vstate obs" title="Detalle en la tarjeta de circulación — revisa el detalle del vehículo"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg>Con observación</span></div>
+            <div class="vgeo">Santa Ana</div>
+          </div>
         </div>
-        <div class="vcard__body">
-          <a class="vcard__link" href="https://www.carvimax.com/vehicle/4"><h3 class="vcard__title">Hyundai Tucson</h3></a>
-          <div class="vcard__price">$16,200</div>
-          <div class="vcard__meta">2021 · 60,000 km · San Miguel</div>
+      </article>
+
+      <article class="vcard">
+        <a class="vcard__link" href="resultados.html" aria-label="Ver Hyundai Tucson"></a>
+        <div class="vimg"><img class="foto" src="car_tucson.webp" alt="Hyundai Tucson" loading="lazy"></div>
+        <div class="vbody">
+          <p class="veb"><span class="cnd">Usado</span> · De agencia</p>
+          <h3 class="vt">Hyundai Tucson</h3>
+          <p class="vspecs">2021 · 60,000 km · Automática · Gasolina</p>
+          <div class="vfoot">
+            <div class="vpricerow"><p class="vp">$16,200</p><span class="vstate ok"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-10"/></svg>Verificado</span></div>
+            <div class="vgeo">San Miguel</div>
+          </div>
         </div>
       </article>
     </div>
+  </section>
+
+  <!-- ===================== ALIADO · LÍDER CARROS ===================== -->
+  <section class="dest-wrap ally-wrap" aria-labelledby="ally-title">
+    <div class="dest__head">
+      <div class="ally__head">
+        <img class="ally__emblem" src="lider-badge.jpg" alt="Líder Carros">
+        <h2 class="ally__title" id="ally-title">Líder Carros</h2>
+      </div>
+      <div class="dest__nav">
+        <a class="dest__all" href="resultados.html?aliado=lider">Ver todos
+          <svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <div class="dest__arrows">
+          <button type="button" class="dest__arrow" data-ally="-1" aria-label="Vehículos anteriores"><svg class="ic" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
+          <button type="button" class="dest__arrow" data-ally="1" aria-label="Vehículos siguientes"><svg class="ic" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
+        </div>
+      </div>
+    </div>
+    <div class="dest__track" id="liderTrack"><!-- construido por JS desde el inventario --></div>
   </section>
 
   <!-- ===================== CONFIANZA ===================== -->
@@ -785,7 +816,7 @@
           <li><svg class="ic" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Historial del vehículo</li>
           <li><svg class="ic" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Traspaso legal con notario</li>
         </ul>
-        <a href="https://www.carvimax.com/comprar" class="cc-btn cc-btn--onbrand">
+        <a href="resultados.html" class="cc-btn cc-btn--onbrand">
           Explorar vehículos
           <svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
@@ -806,7 +837,7 @@
           <li><svg class="ic" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Emisión y pago sin papeleo</li>
         </ul>
         <div class="cc-foot">
-          <a href="https://www.carvimax.com/portal/seguros" class="cc-btn cc-btn--ghost">
+          <a href="#" class="cc-btn cc-btn--ghost">
             Cotizar seguro
             <svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>
@@ -826,7 +857,7 @@
         <div class="sell__eyebrow">Para vendedores</div>
         <h2 id="sell-title">¿Quieres vender tu carro?</h2>
         <p>Publica gratis y llega a miles de compradores verificados. Te acompañamos hasta el traspaso legal con notario.</p>
-        <a href="https://www.carvimax.com/sell" class="sell__cta">Vender mi vehículo
+        <a href="#" class="sell__cta">Vender mi vehículo
           <svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
       </div>
@@ -849,10 +880,10 @@
         </div>
         <div class="footer__col">
           <h3>Servicios</h3>
-          <a href="https://www.carvimax.com/comprar">Comprar vehículos</a>
-          <a href="https://www.carvimax.com/sell">Vender vehículos</a>
+          <a href="resultados.html">Comprar vehículos</a>
+          <a href="#">Vender vehículos</a>
           <a href="#">Financiamiento</a>
-          <a href="https://www.carvimax.com/portal/seguros">Seguros</a>
+          <a href="#">Seguros</a>
         </div>
         <div class="footer__col">
           <h3>Soporte</h3>
@@ -1173,20 +1204,57 @@
       } else { sell.classList.add('is-in'); }
     }
 
-    /* Corazón: guardar con pop */
-    document.querySelectorAll('.vheart').forEach(function(h){
-      h.addEventListener('click',function(e){
-        e.preventDefault();
-        var on=h.classList.toggle('on');
-        h.setAttribute('aria-pressed', on?'true':'false');
-        if(!reduceM) h.animate([{transform:'scale(0.8)'},{transform:'scale(1.18)'},{transform:'scale(1)'}],{duration:300,easing:'cubic-bezier(0.23,1,0.32,1)'});
-      });
-    });
-
     var els=document.querySelectorAll('.reveal:not(.is-visible)');
     if(!('IntersectionObserver' in window)){ els.forEach(function(e){e.classList.add('is-visible');}); return; }
     var io=new IntersectionObserver(function(en){ en.forEach(function(x){ if(x.isIntersecting){ x.target.classList.add('is-visible'); io.unobserve(x.target); } }); }, {threshold:0.16, rootMargin:'0px 0px -40px 0px'});
     els.forEach(function(e){ io.observe(e); });
+  })();
+  </script>
+
+  <!-- Aliado · Líder Carros: render independiente desde el inventario -->
+  <script>
+  (function(){
+    try{
+      var lt=document.getElementById('liderTrack');
+      if(!lt) return;
+      var inv=window.INVENTARIO||[];
+      var fmtN=function(n){return Number(n).toLocaleString('en-US');};
+      var CHK='<svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-10"/></svg>';
+      var INFO='<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg>';
+      function lcard(v){
+        var cond=v.tipo==='nuevo'?'<span class="cnd nuevo">Nuevo</span>':'<span class="cnd">Usado</span>';
+        var ol=v.origen==='importado'?'Importado':'De agencia';
+        var estado=v.observacion
+          ? '<span class="vstate obs" title="Detalle en la tarjeta de circulación">'+INFO+'Con observación</span>'
+          : '<span class="vstate ok">'+CHK+'Verificado</span>';
+        var foto=/^car_/.test(v.img)?' class="foto"':'';
+        return '<article class="vcard">'+
+          '<a class="vcard__link" href="resultados.html?aliado=lider" aria-label="Ver '+v.marca+' '+v.modelo+'"></a>'+
+          '<div class="vimg"><img'+foto+' src="'+v.img+'" alt="'+v.marca+' '+v.modelo+'" loading="lazy"></div>'+
+          '<div class="vbody">'+
+            '<p class="veb">'+cond+' &middot; '+ol+'</p>'+
+            '<h3 class="vt">'+v.marca+' '+v.modelo+'</h3>'+
+            '<p class="vspecs">'+v.year+' &middot; '+(v.km===0?'0 km':fmtN(v.km)+' km')+' &middot; '+v.trans+' &middot; '+v.comb+'</p>'+
+            '<div class="vfoot"><div class="vpricerow"><p class="vp">$'+fmtN(v.precio)+'</p>'+estado+'</div>'+
+            '<div class="vgeo">'+v.depto+'</div></div>'+
+          '</div></article>';
+      }
+      var all=inv.filter(function(v){return v.aliado==='lider';});
+      if(!all.length) all=inv.slice(0,20); /* fallback por si el tag no cargó */
+      var seen={}, uniq=[], rest=[];
+      all.forEach(function(v){ var k=v.marca+' '+v.modelo; if(!seen[k]){seen[k]=1;uniq.push(v);} else rest.push(v); });
+      var lista=uniq.concat(rest).slice(0,10); /* variedad de modelos primero */
+      lt.innerHTML=lista.map(lcard).join('');
+      lt.classList.add('is-in'); /* visible de inmediato (no depende del observer) */
+      var pv=document.querySelector('.dest__arrow[data-ally="-1"]'), nx=document.querySelector('.dest__arrow[data-ally="1"]');
+      function lstep(){ var c=lt.querySelector('.vcard'); return c?c.offsetWidth+16:316; }
+      function lupd(){ var max=lt.scrollWidth-lt.clientWidth-2; if(pv)pv.disabled=lt.scrollLeft<=2; if(nx)nx.disabled=lt.scrollLeft>=max; }
+      if(pv)pv.addEventListener('click',function(){ lt.scrollBy({left:-lstep(),behavior:'smooth'}); });
+      if(nx)nx.addEventListener('click',function(){ lt.scrollBy({left:lstep(),behavior:'smooth'}); });
+      lt.addEventListener('scroll',lupd,{passive:true});
+      window.addEventListener('resize',lupd);
+      lupd();
+    }catch(err){ if(window.console)console.error('Líder Carros:',err); }
   })();
   </script>
 
